@@ -5,6 +5,7 @@ import iss.se.team4.secondhand.service.UserService;
 import iss.se.team4.secondhand.common.Result;
 
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
     //add
@@ -57,8 +58,8 @@ public class UserController {
         return Result.success(list);
     }
 
-    @GetMapping("/selectPage")
-    public Result selectPage(@RequestParam(defaultValue = "1") Integer pageNum,
+    @PostMapping("/selectPage")
+    public Result selectPage(@RequestParam(defaultValue = "0") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
         Page<User> page = userService.selectPage(pageNum ,pageSize);
         return Result.success(page);

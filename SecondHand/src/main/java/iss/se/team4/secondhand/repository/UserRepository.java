@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -41,11 +41,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void updateById(@Param("user") User user);
 
     //search
-    User selectById(int id);
+    Optional<User> findById(Integer id);
 
-    User selectByUsername(String username);
+    User findByUsername(String username);
 
-    List<User> selectAll();
+    List<User> findAll();
 
     @Query("SELECT u from User u " )
     Page<User> getUserPage(Pageable pageable);

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "users") // 数据库表名
+@Table(name = "users")
 public class User extends Account {
 
     @Id

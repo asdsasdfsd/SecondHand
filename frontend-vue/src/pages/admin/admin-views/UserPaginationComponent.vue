@@ -3,7 +3,6 @@
     <el-radio-group v-model="size" class="mr-4">
       <el-radio-button value="default">default</el-radio-button>
       <el-radio-button value="large">large</el-radio-button>
-
       <el-radio-button value="small">small</el-radio-button>
     </el-radio-group>
     <div>
@@ -17,12 +16,19 @@
 
   <hr class="my-4" />
 
+  <el-table :data="users" style="width: 100%">
+    <el-table-column prop="name" label="Name" />
+    <el-table-column prop="username" label="Username" />
+    <el-table-column prop="role" label="Role" />
+    <el-table-column prop="phone" label="Phone" />
+    <el-table-column prop="email" label="Email" />
+  </el-table>
+
   <div class="demo-pagination-block">
-    <div class="demonstration">All combined</div>
     <el-pagination
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
-      :page-sizes="[100, 200, 300, 400]"
+      :page-sizes="[5, 10, 20, 40]"
       :size="size"
       :disabled="disabled"
       :background="background"
@@ -36,18 +42,18 @@
 
 <script lang="ts">
 export default {
-  name: "PaginationComponent",
+  name: "UserPaginationComponent",
 };
+
+import { defineComponent, ref, onMounted } from "vue";
+import type { ComponentSize } from "element-plus";
+import { fetchUsersPage } from "@/api/user/index";
+import type { User } from "@/api/user/type";
 </script>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import type { ComponentSize } from "element-plus";
-import axios from "axios";
-import type { User } from "../api/user/types/user";
-
-const currentPage = ref(5);
-const pageSize = ref(100);
+const currentPage = ref(1);
+const pageSize = ref(5);
 const size = ref<ComponentSize>("default");
 const background = ref(false);
 const disabled = ref(false);
@@ -56,32 +62,28 @@ const users = ref<User[]>([]);
 
 const fetchUsers = async () => {
   try {
-    const response = await axios.get("/users", {
-      params: {
-        page: currentPage.value,
-        size: pageSize.value,
-      },
-    });
-    users.value = response.data.content;
-    totalCount.value = response.data.totalElements;
+    const response = await fetchUsersPage(
+      currentPage.value - 1,
+      pageSize.value
+    );
+    users.value = response.users;
+    totalCount.value = response.totalElements;
   } catch (error) {
-    console.error("Failed to fetch users:", error);
+    console.error("Error fetching users:", error);
   }
 };
+
+onMounted(fetchUsers);
 
 const handleSizeChange = (val: number) => {
   pageSize.value = val;
   fetchUsers();
-  console.log(`Page size changed to ${val} items per page`);
 };
 
 const handleCurrentChange = (val: number) => {
   currentPage.value = val;
   fetchUsers();
-  console.log(`Current page changed to ${val}`);
 };
-
-watch([currentPage, pageSize], fetchUsers, { immediate: true });
 </script>
 
 <style scoped>

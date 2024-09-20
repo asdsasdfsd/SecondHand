@@ -5,25 +5,27 @@ import iss.se.team4.secondhand.repository.UserRepository;
 import iss.se.team4.secondhand.service.UserService;
 
 import jakarta.annotation.Resource;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     //dependency inject
-    @Resource
+    @Autowired
     private UserRepository userRepository;
 
     //add
     @Override
     public void add(User user) {
-        User dbUser = userRepository.selectByUsername(user.getUsername());
+        User dbUser = userRepository.findByUsername(user.getUsername());
     }
 
     //delete
@@ -46,12 +48,17 @@ public class UserServiceImpl implements UserService {
     //search
     @Override
     public User selectById(Integer id) {
-        return userRepository.selectById(id);
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public List<User> selectAll() {
-        return userRepository.selectAll();
+        return userRepository.findAll();
     }
 
     @Override

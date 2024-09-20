@@ -3,7 +3,7 @@ import axios from "axios";
 import { ElMessage } from "element-plus";
 
 let request = axios.create({
-  baseURL: "/",
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 5000,
 });
 
