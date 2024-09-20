@@ -5,6 +5,79 @@
 - **Node.js**
 - **npm**
 
+# 安装依赖
+
+## 连接数据库
+
+### application.properties
+
+![application.properties](Readme-Image/application.properties.png)
+
+### HeidiSQL
+
+![HeidiSQL](Readme-Image/HeidiSQL.png)
+
+请确保红色方框中的信息一一对应：
+
+- **IP**
+- **端口**
+- **用户名**（一般为 `root`）
+- **密码**
+
+绿色方框中的名称可以修改，但必须在 MySQL 中创建一个相同名字的数据库。运行 Java Spring Boot 应用时，会自动创建空的表（JPA 的 ORM 功能）。
+
+# 后端运行依赖
+
+## Maven
+
+![Maven](Readme-Image/Maven.png)
+
+按上面的配置，Maven 应该可以自动将依赖下载到本地仓库，无需单独下载 Maven。
+
+# 前端运行
+
+### Windows
+
+下载 Node.js：[https://nodejs.org/zh-cn](https://nodejs.org/zh-cn)（记得选 "Add to PATH" 选项）
+
+### macOS
+
+可以使用 Homebrew 安装：
+
+```bash
+brew install node
+```
+
+命令行直接下载
+下载 node.js,会带着 npm
+检测下载
+
+```bash
+node -v
+npm -v
+```
+
+安装依赖
+
+```bash
+#进入frondend-vue文件夹
+npm install
+```
+
+运行
+
+```bash
+#进入frondend-vue文件夹
+npm run dev
+#不想用dev可以改下面红框中对应的命令
+```
+
+## CLI
+
+![CLI](Readme-Image/CLI.png)
+
+暂时想到这么多，有问题我们再讨论
+
 # 后端结构介绍
 
 ## pom.xml - Maven 管理的项目依赖 (目前包括)
@@ -63,3 +136,7 @@
 
 - **MySQL**
 - **HeidiSQL** 数据库客户端工具
+
+```
+
+```
