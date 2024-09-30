@@ -4,8 +4,6 @@ import iss.se.team4.secondhand.model.User;
 import iss.se.team4.secondhand.repository.UserRepository;
 import iss.se.team4.secondhand.service.UserService;
 
-import jakarta.annotation.Resource;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,10 +64,4 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         return userRepository.getUserPage(pageable);
     }
-
-    //login
-
-    //register
-
-    //update password
 }
