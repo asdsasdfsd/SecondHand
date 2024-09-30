@@ -1,5 +1,6 @@
 package iss.se.team4.secondhand.service.impl;
 
+import iss.se.team4.secondhand.common.Result;
 import iss.se.team4.secondhand.model.User;
 import iss.se.team4.secondhand.repository.UserRepository;
 import iss.se.team4.secondhand.service.UserService;
@@ -65,6 +66,17 @@ public class UserServiceImpl implements UserService {
     public Page<User> selectPage(Integer pageNum, Integer pageSize){
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         return userRepository.getUserPage(pageable);
+    }
+
+    @Override
+    public Result register(User user) {
+        User optionalUser = userRepository.findByUsername(user.getUsername());
+        if (optionalUser == null) {
+            userRepository.save(user);
+            return Result.success();
+        } else {
+            return Result.failure("Account already exists");
+        }
     }
 
     //login

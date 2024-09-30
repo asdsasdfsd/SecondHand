@@ -1,5 +1,6 @@
 package iss.se.team4.secondhand.service;
 
+import iss.se.team4.secondhand.common.Result;
 import iss.se.team4.secondhand.model.User;
 
 import org.springframework.data.domain.Page;
@@ -63,10 +64,10 @@ public interface UserService {
      */
     Page<User> selectPage(Integer pageNum, Integer pageSize);
 
-    // Placeholder methods for login, register, and update password functionalities.
-
-    // others
-    // User login(String username, String password);
-    // void register(User user);
-    // void updatePassword(Integer id, String newPassword);
+    /**
+     * user register
+     *
+     * @param user the user to be registered
+     */
+    Result register(User user);
 }
