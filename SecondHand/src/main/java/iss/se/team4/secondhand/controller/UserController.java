@@ -64,4 +64,10 @@ public class UserController {
         Page<User> page = userService.selectPage(pageNum ,pageSize);
         return Result.success(page);
     }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody User user) {
+        Result result = userService.register(user);
+        return result;
+    }
 }

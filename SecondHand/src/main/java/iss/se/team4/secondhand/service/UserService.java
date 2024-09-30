@@ -1,5 +1,6 @@
 package iss.se.team4.secondhand.service;
 
+import iss.se.team4.secondhand.common.Result;
 import iss.se.team4.secondhand.model.User;
 
 import org.springframework.data.domain.Page;
@@ -67,6 +68,5 @@ public interface UserService {
 
     // others
     // User login(String username, String password);
-    // void register(User user);
-    // void updatePassword(Integer id, String newPassword);
+    Result register(User user);
 }
