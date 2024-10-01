@@ -33,7 +33,7 @@ jobs:
     - name: Build with Maven
       working-directory: SecondHand
       run: mvn clean install -B
-#
+
 #    - name: Run JUnit Tests
 #      working-directory: SecondHand
 #      run: mvn test
