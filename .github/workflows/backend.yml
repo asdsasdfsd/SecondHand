@@ -35,7 +35,7 @@ jobs:
 
     - name: Build with Maven
       working-directory: SecondHand
-      run: mvn clean install --no-progress --batch-mode
+      run: mvn clean install
 
     - name: Run JUnit Tests
       working-directory: SecondHand
