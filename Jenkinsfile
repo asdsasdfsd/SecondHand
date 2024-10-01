@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_REPO_FRONTEND = 'SH-Vue'               
-        DOCKERHUB_REPO_BACKEND = 'SH-Spring'             
+        DOCKERHUB_REPO_FRONTEND = 'sh-vue'               
+        DOCKERHUB_REPO_BACKEND = 'sh-spring'             
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'  
         DOCKERHUB_USER = 'tigerwk'                       
     }
