@@ -29,11 +29,12 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.m2
-        key: ${{ runner.os }}-maven-${{ hashFiles('SecondHand/pom.xml') }}
+        key: ${{ runner.os }}-maven-${{ hashFiles('SecondHand/SecondHand/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
 
     - name: Build with Maven
+      working-directory: SecondHand/SecondHand/
       run: mvn clean install -B
 
 #    - name: Run JUnit Tests
