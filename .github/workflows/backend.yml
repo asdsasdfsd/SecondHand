@@ -26,7 +26,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ~/.m2
-        key: ${{ runner.os }}-maven-${{ hashFiles('SecondHand/SecondHand/pom.xml') }}
+        key: ${{ runner.os }}-maven-${{ hashFiles('SecondHand/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
 
@@ -34,17 +34,17 @@ jobs:
       run: ls -R
 
     - name: Build with Maven
-      working-directory: SecondHand/SecondHand
+      working-directory: SecondHand
       run: mvn clean install --no-progress --batch-mode
 
     - name: Run JUnit Tests
-      working-directory: SecondHand/SecondHand
+      working-directory: SecondHand
       run: mvn test
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '20'
 
     - name: Install dependencies
       run: npm install
