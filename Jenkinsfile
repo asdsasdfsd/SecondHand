@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_REPO_FRONTEND = 'sh-vue'               
-        DOCKERHUB_REPO_BACKEND = 'sh-spring'             
+        DOCKERHUB_REPO_BACKEND = 'sh-spring'              
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'  
         DOCKERHUB_USER = 'tigerwk'                       
     }
@@ -12,6 +12,23 @@ pipeline {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/asdsasdfsd/SecondHand', branch: 'cicd'
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend-vue') {
+                    sh 'npm install'   
+                    sh 'npm run build' 
+                }
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('SecondHand') {               
+                    sh 'mvn clean install -DskipTests'
+                }
             }
         }
 
