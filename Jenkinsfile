@@ -19,6 +19,7 @@ pipeline {
             steps {
                 script {
                     dir('frontend-vue') {
+                        echo "${env.DOCKERHUB_USER}/${env.DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}"
                         def frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
                     }
                 }
