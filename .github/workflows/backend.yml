@@ -34,7 +34,6 @@ jobs:
           ${{ runner.os }}-maven-
 
     - name: Build with Maven
-      working-directory: SecondHand
       run: mvn clean install -B
 
 #    - name: Run JUnit Tests
