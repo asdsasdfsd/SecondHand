@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SecurityQuestionRepository extends JpaRepository<SecurityQuestion, Integer> {
-
+    
     SecurityQuestion findByUsername(String username);
 }

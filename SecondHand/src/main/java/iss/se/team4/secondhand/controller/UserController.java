@@ -1,12 +1,13 @@
 package iss.se.team4.secondhand.controller;
 
+import iss.se.team4.secondhand.common.dto.ChangePasswordDto;
 import iss.se.team4.secondhand.common.dto.RegisterDto;
 import iss.se.team4.secondhand.common.dto.LoginDto;
+import iss.se.team4.secondhand.common.dto.CheckSecurityQuestionDto;
 import iss.se.team4.secondhand.model.User;
 import iss.se.team4.secondhand.service.UserService;
 import iss.se.team4.secondhand.common.Result;
 
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -75,5 +76,21 @@ public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody LoginDto loginDto) {
         return  userService.login(loginDto.getUsername(), loginDto.getPassword());
+    }
+
+    @GetMapping("/getSecurityQuestion/{username}")
+    public Result getSecurityQuestion(@PathVariable String username) {
+        return userService.getUserSecurityQuestion(username);
+    }
+
+    @PostMapping("/checkSecurityQuestion")
+    public Result checkSecurityQuestion(@RequestBody CheckSecurityQuestionDto checkSecurityQuestionDto) {
+        return userService.checkSecurityQuestion(checkSecurityQuestionDto.getUsername(),
+                checkSecurityQuestionDto.getQuestion(), checkSecurityQuestionDto.getAnswer());
+    }
+
+    @PostMapping("/changePassword")
+    public Result changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+        return userService.changePassword(changePasswordDto.getUsername(), changePasswordDto.getPassword());
     }
 }

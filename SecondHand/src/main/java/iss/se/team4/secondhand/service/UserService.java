@@ -86,4 +86,16 @@ public interface UserService {
      */
     Result login(String username, String password);
 
+    /**
+     * get user's security question
+     *
+     * @param username
+     */
+    Result getUserSecurityQuestion(String username);
+
+    Result checkSecurityQuestion(String username, String question, String answer);
+
+    Result changePassword(String username, String newPassword);
+
+
 }

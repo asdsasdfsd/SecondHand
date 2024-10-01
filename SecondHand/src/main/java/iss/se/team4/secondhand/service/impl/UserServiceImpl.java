@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SecurityQuestionRepository  securityQuestionRepository;
 
+
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
@@ -137,5 +138,42 @@ public class UserServiceImpl implements UserService {
                 .put("token", jwt)
                 .put("user", loginUserInfo)
                 .map());
+    }
+
+    @Override
+    public Result getUserSecurityQuestion(String username) {
+        User optionalUser = userRepository.findByUsername(username);
+        if (optionalUser == null) {
+            return Result.failure("User not found");
+        }
+        SecurityQuestion securityQuestion = securityQuestionRepository.findByUsername(username);
+        if (securityQuestion == null) {
+            return Result.failure("User's Security question not found");
+        }
+        return Result.success(securityQuestion.getQuestion());
+    }
+
+    @Override
+    public Result checkSecurityQuestion(String username, String question, String answer) {
+        User optionalUser = userRepository.findByUsername(username);
+        if (optionalUser == null) {
+            return Result.failure("User not found");
+        }
+        SecurityQuestion securityQuestion = securityQuestionRepository.findByUsername(username);
+        if (!answer.equals(securityQuestion.getAnswer())) {
+            return Result.failure("Wrong answer");
+        }
+        return Result.success();
+    }
+
+    @Override
+    public Result changePassword(String username, String newPassword) {
+        User optionalUser = userRepository.findByUsername(username);
+        if (optionalUser == null) {
+            return Result.failure("User not found");
+        }
+        optionalUser.setPassword(encoder.encode(newPassword));
+        userRepository.save(optionalUser);
+        return Result.success();
     }
 }

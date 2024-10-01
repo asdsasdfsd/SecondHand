@@ -8,8 +8,8 @@ import lombok.Setter;
 @Table(name = "user_security_questions")
 public class SecurityQuestion {
 
-    @Id
     @Getter
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
