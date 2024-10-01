@@ -1,5 +1,7 @@
 package iss.se.team4.secondhand.controller;
 
+import iss.se.team4.secondhand.common.dto.RegisterDto;
+import iss.se.team4.secondhand.common.dto.LoginDto;
 import iss.se.team4.secondhand.model.User;
 import iss.se.team4.secondhand.service.UserService;
 import iss.se.team4.secondhand.common.Result;
@@ -63,5 +65,15 @@ public class UserController {
                              @RequestParam(defaultValue = "10") Integer pageSize) {
         Page<User> page = userService.selectPage(pageNum ,pageSize);
         return Result.success(page);
+    }
+
+    @PostMapping("/register")
+    public Result register(@RequestBody RegisterDto registerDto) {
+        return userService.register(registerDto);
+    }
+
+    @PostMapping("/login")
+    public Result login(@RequestBody LoginDto loginDto) {
+        return  userService.login(loginDto.getUsername(), loginDto.getPassword());
     }
 }
