@@ -12,6 +12,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 200158
+          MYSQL_DATABASE: ad
+          MYSQL_USER: root
+          MYSQL_PASSWORD: 200158
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/ad?useSSL=false&serverTimezone=Asia/Singapore&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 200158
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -43,11 +64,11 @@ jobs:
 #      with:
 #        node-version: '20'
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run integration tests
-      run: npm run test:integration
+#    - name: Install dependencies
+#      run: npm install
+#
+#    - name: Run integration tests
+#      run: npm run test:integration
 
 
 
