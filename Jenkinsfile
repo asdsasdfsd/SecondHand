@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_REPO_FRONTEND = 'SH-Vue'   
-        DOCKERHUB_REPO_BACKEND = 'SH-Spring'   
-        DOCKERHUB_USER = 'tigerwk'  
+        DOCKERHUB_REPO_FRONTEND = 'sh-vue'               
+        DOCKERHUB_REPO_BACKEND = 'sh-spring'              
+        DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'  
+        DOCKERHUB_USER = 'tigerwk'                       
     }
 
     stages {
@@ -14,11 +15,28 @@ pipeline {
             }
         }
 
+        stage('Build Frontend') {
+            steps {
+                dir('frontend-vue') {
+                    sh 'npm install'   
+                    sh 'npm run build' 
+                }
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('SecondHand') {               
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
+        }
+
         stage('Build Frontend Docker Image') {
             steps {
                 script {
                     dir('frontend-vue') {
-                        def frontendImage = docker.build("${env.DOCKERHUB_USER}/${env.DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
+                        def frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
                     }
                 }
             }
@@ -28,7 +46,7 @@ pipeline {
             steps {
                 script {
                     dir('SecondHand') {
-                        def backendImage = docker.build("${env.DOCKERHUB_USER}/${env.DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
+                        def backendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
                     }
                 }
             }
@@ -36,9 +54,9 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USER')]) {
-                    script {
-                        sh "echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USER --password-stdin"
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKERHUB_CREDENTIALS}") {
+                        echo 'Logged in to Docker Hub successfully'
                     }
                 }
             }
@@ -47,8 +65,10 @@ pipeline {
         stage('Push Frontend Image to Docker Hub') {
             steps {
                 script {
-                    def frontendImage = docker.image("${env.DOCKERHUB_USER}/${env.DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
-                    frontendImage.push()
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKERHUB_CREDENTIALS}") {
+                        def frontendImage = docker.image("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
+                        frontendImage.push()
+                    }
                 }
             }
         }
@@ -56,8 +76,10 @@ pipeline {
         stage('Push Backend Image to Docker Hub') {
             steps {
                 script {
-                    def backendImage = docker.image("${env.DOCKERHUB_USER}/${env.DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
-                    backendImage.push()
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKERHUB_CREDENTIALS}") {
+                        def backendImage = docker.image("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
+                        backendImage.push()
+                    }
                 }
             }
         }
@@ -66,8 +88,8 @@ pipeline {
     post {
         always {
             script {
-                sh "docker rmi ${env.DOCKERHUB_USER}/${env.DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID} || true"
-                sh "docker rmi ${env.DOCKERHUB_USER}/${env.DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID} || true"
+                sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID} || true"
+                sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID} || true"
             }
         }
     }
