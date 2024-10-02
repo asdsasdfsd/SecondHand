@@ -41,16 +41,16 @@ jobs:
       working-directory: SecondHand
       run: mvn test
 
-#    - name: Set up Node.js
-#      uses: actions/setup-node@v2
-#      with:
-#        node-version: '20'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
 
-#    - name: Install dependencies
-#      run: npm install
-#
-#    - name: Run integration tests
-#      run: npm run test:integration
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run integration tests
+      run: npm run test:integration
 
 
 
