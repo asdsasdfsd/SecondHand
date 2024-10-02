@@ -47,9 +47,11 @@ jobs:
         node-version: '20'
 
     - name: Install dependencies
+      working-directory: frontend-vue
       run: npm install
 
     - name: Run integration tests
+      working-directory: frontend-vue
       run: npm run test:integration
 
 
