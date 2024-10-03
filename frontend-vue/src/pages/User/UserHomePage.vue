@@ -1,4 +1,6 @@
-<template></template>
+<template>
+  <el-button type="primary">User Home</el-button>
+</template>
 
 <script lang="ts">
 export default {
