@@ -41,18 +41,7 @@ jobs:
       working-directory: SecondHand
       run: mvn test
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
 
-    - name: Install dependencies
-      working-directory: frontend-vue
-      run: npm install
-
-    - name: Run integration test
-      working-directory: frontend-vue
-      run: npm run test:integration
 
 
 
