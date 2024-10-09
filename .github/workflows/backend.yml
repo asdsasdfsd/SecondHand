@@ -50,7 +50,7 @@ jobs:
       working-directory: frontend-vue
       run: npm install
 
-    - name: Run integration tests
+    - name: Run integration test
       working-directory: frontend-vue
       run: npm run test:integration
 
