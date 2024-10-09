@@ -1,6 +1,6 @@
 import type { Config } from 'jest';
-import { pathsToModuleNameMapper } from 'ts-jest/utils';
-import { compilerOptions } from './tsconfig.app.json'; // 确保路径正确
+import { pathsToModuleNameMapper } from 'ts-jest';
+import { compilerOptions } from 'tsconfig.app.json'; // 确保路径正确
 
 const config: Config = {
     preset: 'ts-jest',
