@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
-    "test:unit": "jest --config jest.config.js",
+    "test:unit": "jest --config jest.config.ts",
     "test:integration": "jest --config jest.integration.config.js"
   },
   "dependencies": {
