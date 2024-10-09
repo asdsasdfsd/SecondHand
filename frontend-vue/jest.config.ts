@@ -5,7 +5,7 @@ const config: Config = {
     testEnvironment: 'jest-environment-jsdom',
     roots: ['<rootDir>/src'],
     testMatch: [
-        '**/__tests__/**/*.[jt]s?(x)',
+        '**/tests/**/*.[jt]s?(x)',
         '**/?(*.)+(spec|test).[tj]s?(x)',
     ],
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'],
