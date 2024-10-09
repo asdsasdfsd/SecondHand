@@ -55,8 +55,13 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKERHUB_CREDENTIALS}") {
-                        echo 'Logged in to Docker Hub successfully'
+                    try {
+                        docker.withRegistry('https://registry-1.docker.io/v2/', "${DOCKERHUB_CREDENTIALS}") {
+                            echo 'Logged in to Docker Hub successfully'
+                        }
+                    } catch (Exception e) {
+                        echo "Error during login: ${e.message}"
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }
