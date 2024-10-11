@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import routes from '@/router';
 
 describe('Router', () => {
-    let router;
+    let router: ReturnType<typeof createRouter>;
 
     beforeEach(() => {
         router = createRouter({
@@ -12,39 +12,38 @@ describe('Router', () => {
     });
 
     it('should navigate to login page', async () => {
-        await router.push('/login');
-
-        // 确保页面组件渲染
+        router.push('/login');
+        await router.isReady();
         expect(router.currentRoute.value.name).toBe('login');
     });
 
     it('should navigate to register page', async () => {
-        await router.push('/register');
-
+        router.push('/register');
+        await router.isReady();
         expect(router.currentRoute.value.name).toBe('register');
     });
 
     it('should navigate to user home page', async () => {
-        await router.push('/user');
-
+        router.push('/user');
+        await router.isReady();
         expect(router.currentRoute.value.name).toBe('user');
     });
 
     it('should navigate to admin management page', async () => {
-        await router.push('/admin');
-
+        router.push('/admin');
+        await router.isReady();
         expect(router.currentRoute.value.name).toBe('admin');
     });
 
     it('should navigate to admin user pagination component', async () => {
-        await router.push('/admin/users');
-
+        router.push('/admin-userpage');
+        await router.isReady();
         expect(router.currentRoute.value.name).toBe('admin-userpage');
     });
 
     it('should redirect from root to login page', async () => {
-        await router.push('/');
-
+        router.push('/');
+        await router.isReady();
         expect(router.currentRoute.value.name).toBe('login');
     });
 });
