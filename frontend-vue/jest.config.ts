@@ -12,11 +12,6 @@ const config: Config = {
     ],
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-    globals: {
-        'ts-jest': {
-            tsconfig: './tsconfig.app.json', // 指定 Jest 使用的 tsconfig
-        },
-    },
 };
 
 export default config;
