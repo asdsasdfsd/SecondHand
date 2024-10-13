@@ -1,6 +1,6 @@
 import type { Config } from 'jest';
 import { pathsToModuleNameMapper } from 'ts-jest';
-const { compilerOptions } = require('./tsconfig.app.json');
+import { compilerOptions } from './tsconfig.app.json';
 
 const config: Config = {
     preset: 'ts-jest',
@@ -12,6 +12,10 @@ const config: Config = {
     ],
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+    transform: {
+        '^.+\\.vue$': 'vue-jest',
+        '^.+\\.[tj]sx?$': 'ts-jest',
+    },
 };
 
 export default config;
