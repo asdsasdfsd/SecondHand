@@ -48,3 +48,4 @@ const router = createRouter({
 localStorage.setItem("auth", "true");
 
 export default router;
+export { routes };
