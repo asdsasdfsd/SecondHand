@@ -48,5 +48,4 @@ describe('Router', () => {
         expect(router.currentRoute.value.name).toBe('admin-userpage');
     });
 
-
 });
