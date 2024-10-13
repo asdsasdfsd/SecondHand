@@ -6,14 +6,11 @@ const config: Config = {
     preset: 'ts-jest',
     testEnvironment: 'jest-environment-jsdom',
     roots: ['<rootDir>/src'],
-    testMatch: [
-        '**/tests/**/*.[jt]s?(x)',
-        '**/?(*.)+(spec|test).[tj]s?(x)',
-    ],
+    testMatch: ['**/tests/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
     transform: {
-        '^.+\\.vue$': '@vue/vue3-jest', // 对于 Vue 3
+        '^.+\\.vue$': '@vue/vue3-jest',
         '^.+\\.[tj]sx?$': 'ts-jest',
     },
 };
