@@ -13,7 +13,7 @@ const config: Config = {
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
     transform: {
-        '^.+\\.vue$': 'vue-jest',
+        '^.+\\.vue$': '@vue/vue3-jest', // 对于 Vue 3
         '^.+\\.[tj]sx?$': 'ts-jest',
     },
 };
