@@ -18,6 +18,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend-vue') {
+                    sh 'npm i --save-dev @types/jest'
                     sh 'npm install'   
                     sh 'npm run build' 
                 }
