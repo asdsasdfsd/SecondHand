@@ -97,5 +97,9 @@ public interface UserService {
 
     Result changePassword(String username, String newPassword);
 
+    Result getUserAddress(String username);
+
+    Result setUserAddress(String username, String address1, String address2);
+
 
 }

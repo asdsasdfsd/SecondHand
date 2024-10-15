@@ -17,7 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -179,6 +181,34 @@ public class UserServiceImpl implements UserService {
             return Result.failure("User not found");
         }
         optionalUser.setPassword(encoder.encode(newPassword));
+        userRepository.save(optionalUser);
+        return Result.success();
+    }
+
+    @Override
+    public Result getUserAddress(String username) {
+        User optionalUser = userRepository.findByUsername(username);
+        if (optionalUser == null) {
+            return Result.failure("User not found");
+        }
+        Map<String, String> userAddress = new HashMap<String, String>();
+        userAddress.put("address1", optionalUser.getAddress1());
+        userAddress.put("address2", optionalUser.getAddress2());
+
+        return Result.success(userAddress);
+    }
+
+    @Override
+    public Result setUserAddress(String username, String address1, String address2) {
+        User optionalUser = userRepository.findByUsername(username);
+        if (optionalUser == null) {
+            return Result.failure("User not found");
+        }
+        if ("".equals(address1) || address1 == null) {
+            return Result.failure("address1 cannot be empty");
+        }
+        optionalUser.setAddress1(address1);
+        optionalUser.setAddress2(address2);
         userRepository.save(optionalUser);
         return Result.success();
     }

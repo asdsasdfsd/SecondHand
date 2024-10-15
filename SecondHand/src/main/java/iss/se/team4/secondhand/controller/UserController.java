@@ -1,9 +1,6 @@
 package iss.se.team4.secondhand.controller;
 
-import iss.se.team4.secondhand.common.dto.ChangePasswordDto;
-import iss.se.team4.secondhand.common.dto.RegisterDto;
-import iss.se.team4.secondhand.common.dto.LoginDto;
-import iss.se.team4.secondhand.common.dto.CheckSecurityQuestionDto;
+import iss.se.team4.secondhand.common.dto.*;
 import iss.se.team4.secondhand.model.User;
 import iss.se.team4.secondhand.service.UserService;
 import iss.se.team4.secondhand.common.Result;
@@ -92,5 +89,17 @@ public class UserController {
     @PostMapping("/changePassword")
     public Result changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
         return userService.changePassword(changePasswordDto.getUsername(), changePasswordDto.getPassword());
+    }
+
+    @GetMapping("/getUserAddress/{username}")
+    public Result getUserAddress(@PathVariable String username) {
+        return userService.getUserAddress(username);
+    }
+
+    @PostMapping("/setUserAddress")
+    public Result setUserAddress(@RequestBody ChangeAddressDto changeAddressDto) {
+        return userService.setUserAddress(changeAddressDto.getUsername(),
+                changeAddressDto.getAddress1(),
+                changeAddressDto.getAddress2());
     }
 }
