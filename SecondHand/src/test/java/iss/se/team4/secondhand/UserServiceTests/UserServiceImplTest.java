@@ -61,6 +61,8 @@ class UserServiceImplTest {
         User testUser = userRepository.findByUsername(registerDto.getUsername());
         assertNotNull(testUser);
         assertTrue(encoder.matches("password", testUser.getPassword()));
+        assertEquals("university town", testUser.getAddress1());
+        assertEquals("", testUser.getAddress2());
         SecurityQuestion securityQuestion = securityQuestionRepository.findByUsername(registerDto.getUsername());
         assertNotNull(securityQuestion);
         assertEquals("123", securityQuestion.getQuestion());

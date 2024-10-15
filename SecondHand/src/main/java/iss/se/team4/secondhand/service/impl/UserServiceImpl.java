@@ -30,6 +30,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SecurityQuestionRepository  securityQuestionRepository;
 
+    private static final String DEFAULT_ADDRESS = "university town";
+
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -101,6 +103,10 @@ public class UserServiceImpl implements UserService {
             user.setPhone(registerDto.getPhone());
             user.setAvatar(registerDto.getAvatar());
             user.setRole(registerDto.getRole());
+            // default address
+            user.setAddress1(DEFAULT_ADDRESS);
+            // address2 is empty by default
+            user.setAddress2("");
 
             userRepository.save(user);
 
