@@ -4,6 +4,7 @@
         <el-header height="80px">
           <el-row>
             <el-col :span="12"><div class="left-header">
+              <span></span>
               <el-menu
                 class="el-menu-demo"
                 mode="horizontal"
