@@ -4,10 +4,10 @@
         <el-header height="80px">
           <el-row>
             <el-col :span="12"><div class="left-header">
-              <span></span>
               <el-menu
                 class="el-menu-demo"
                 mode="horizontal"
+                default-active="/commodity"
                 :ellipsis="false"
                 router
               >
@@ -48,7 +48,10 @@
 
 
 
-        <el-footer>Footer</el-footer>
+        <el-footer><div class="footer_class">
+          <span class="footer_font">Copyright SecondHand is Powered by</span>
+          <span class="footer_team4"> team4</span>
+        </div></el-footer>
       </el-container>
     </div>
   </template>
@@ -73,16 +76,18 @@
   console.log(router.getRoutes());
   const list = router.getRoutes().filter(v=>v.meta.isShow)
   console.log(list);
-
+  console.log(history.state.isAdmin);
+  let isAdmin = history.state.isAdmin
+  
   const handleCommand = (command: string | number | object) => {
     if(command == "a")
     {
-      router.push("/user");
+      if(isAdmin) router.push("/admin");// change flag
+      else router.push("/user");
     } 
     else if(command == "b"){
       router.push("/login");
     }
-    
     
 }
   
@@ -109,6 +114,16 @@
       margin-right: 10px;
       }
     }
+  }
+  .footer_class{
+      text-align: center;
+      background-color: rgb(90,156,248);
+      .footer_font{
+        color: white;
+      }
+      .footer_team4{
+        color: rgb(149,115,86);
+      }
   }
 </style>
   

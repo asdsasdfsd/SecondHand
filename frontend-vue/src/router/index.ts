@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "@/pages/LoginPage.vue";
 import HomePage from "@/pages/HomePage.vue";
-import RegisterPage from "@/pages/RegisterPage.vue";
 import UserHomePage from "@/pages/User/UserHomePage.vue";
+import UserInformationPage from "@/pages/User/UserInformationPage.vue";
+import AdminHomePage from "@/pages/admin/AdminHomePage.vue";
+import RegisterPage from "@/pages/RegisterPage.vue";
+
 import ManagementPage from "@/pages/admin/ManagementPage.vue";
 
-import UserPaginationComponent from "@/pages/admin/admin-views/UserPaginationComponent.vue";
 
 const routes = [
   {
@@ -14,9 +16,14 @@ const routes = [
     component: HomePage,
     children: [
       {
-        name: "admin-userpage",
+        name: "admin",
         path: "/admin",
-        component: () => import('../pages/admin/ManagementPage.vue')
+        component: () => import('../pages/admin/AdminHomePage.vue')
+      },
+      {
+        name: "user",
+        path: "/user",
+        component: () => import('../pages/User/UserHomePage.vue'),
       },
       {
         name: "goods",
@@ -45,6 +52,12 @@ const routes = [
         },
         component: () => import('../pages/contact/ContactPage.vue')
       },
+      {
+        name:"default",
+        path:"",
+        component: () => import('../pages/commodity/CommodityPage.vue'),
+      },
+     
     ],
   },
   {
@@ -56,28 +69,8 @@ const routes = [
     path: "/",
     redirect: "/login",
   },
-  {
-    name: "register",
-    path: "/register",
-    component: RegisterPage,
-  },
-  {
-    name: "user",
-    path: "/user",
-    component: UserHomePage,
-  },
-  {
-    name: "admin",
-    path: "/admin",
-    component: ManagementPage,
-    children: [
-      {
-        name: "admin-userpage",
-        path: "users",
-        component: UserPaginationComponent,
-      },
-    ],
-  },
+  
+  
 ];
 
 const router = createRouter({

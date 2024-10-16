@@ -28,7 +28,17 @@ export default {
 
     const login = () => {
       if (username.value === "admin" && password.value === "admin") {
-        router.push("/home");
+        router.push({
+          path:"/home",
+          state:{isAdmin:true}
+        });
+      }
+      else if(username.value === "user" && password.value === "user")
+      {
+        router.push({
+          path:"/home",
+          state:{isAdmin:false}
+        });
       } else {
         alert("Invalid username or password");
       }
