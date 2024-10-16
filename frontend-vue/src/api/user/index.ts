@@ -4,6 +4,7 @@ import type { ApiResponse, User } from "./type";
 enum API {
   UserManagement = "/api/user/selectPage",
   Login = "/api/user/login",
+  ProductManagement = "/api/products/selectPage",
 }
 
 interface LoginResponse {
@@ -18,6 +19,18 @@ interface UsersPageResponse {
   totalElements: number;
 }
 
+export interface Product {
+  id: number;
+  amount: number;
+  owner: string;
+  ownerRating: number;
+  name: string;
+  description: string;
+  price: number;
+  imageUrl: string;
+  releaseDate: string;
+}
+
 export const loginUser = async (username: string, password: string): Promise<LoginResponse> => {
   const response = await request.post<LoginResponse>(API.Login, {
     username,
@@ -27,6 +40,12 @@ export const loginUser = async (username: string, password: string): Promise<Log
   //example: {success: true/false, token: "auth-token", message: "error or success message"}
   return response.data;
 }
+
+export const fetchProducts = async (): Promise<Product[]> => {
+  const response = await request.get<{ data: Product[] }>(API.ProductManagement);
+  return response.data;
+};
+
 
 export const fetchUsersPage = async (
   pageNum = 0,
@@ -51,3 +70,4 @@ export const fetchUsersPage = async (
     totalElements: (response.data as any).totalElements,
   };
 };
+
