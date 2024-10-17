@@ -5,10 +5,12 @@ on:
     branches:
       - master
       - cicd
+      - release
   pull_request:
     branches:
       - master
       - cicd
+      - release
 
 jobs:
   build:
