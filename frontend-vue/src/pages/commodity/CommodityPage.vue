@@ -12,6 +12,40 @@
             </el-card>
           </el-col>
         </el-row>
+        <!---
+        <el-row :gutter="20">
+          <el-col :span="6" v-for="product in products" :key="product.id">
+            <el-card class="product-card">
+              <img :src="product.imageUrl" class="product-image" />
+              <div class="product-info">
+                <h3 @click="openProductDetails(product)">{{ product.name }}</h3>
+                <p>Amount: {{ product.amount }}</p>
+                <p><strong>${{ product.price }}</strong></p>
+                <el-button type="primary" @click="addToCart(product)">Add to Cart</el-button>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      -->
+
+        <el-dialog
+        :visible.sync="isDialogVisible"
+        width="400px"
+        :before-close="handleClose"
+        >
+        <template #title>
+          <h3>{{ selectedProduct?.name }}</h3>
+        </template>
+        <div>
+          <img :src="selectedProduct?.imageUrl" class="dialog-product-image" />
+          <p><strong>Price: ${{ selectedProduct?.price }}</strong></p>
+          <p><strong>Owner Rating: {{ selectedProduct?.ownerRating }}</strong></p>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="isDialogVisible = false">Close</el-button>
+        </span>
+      </el-dialog>
+        
     </div>
 </template>
 
@@ -59,4 +93,14 @@ const handleClose = () => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.dialog-product-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.dialog-footer {
+  text-align: right;
+}
+</style>
