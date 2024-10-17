@@ -1,5 +1,6 @@
 <template>
     <div>
+      <!--sample，可注释掉这一段-->
       <el-row :gutter="20">
           <el-col :span="6">
             <el-card class="product-card">
@@ -12,7 +13,7 @@
             </el-card>
           </el-col>
         </el-row>
-        <!---
+        
         <el-row :gutter="20">
           <el-col :span="6" v-for="product in products" :key="product.id">
             <el-card class="product-card">
@@ -26,25 +27,24 @@
             </el-card>
           </el-col>
         </el-row>
-      -->
 
         <el-dialog
         :visible.sync="isDialogVisible"
         width="400px"
         :before-close="handleClose"
         >
-        <template #title>
-          <h3>{{ selectedProduct?.name }}</h3>
-        </template>
-        <div>
-          <img :src="selectedProduct?.imageUrl" class="dialog-product-image" />
-          <p><strong>Price: ${{ selectedProduct?.price }}</strong></p>
-          <p><strong>Owner Rating: {{ selectedProduct?.ownerRating }}</strong></p>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="isDialogVisible = false">Close</el-button>
-        </span>
-      </el-dialog>
+          <template #title>
+            <h3>{{ selectedProduct?.name }}</h3>
+          </template>
+          <div>
+            <img :src="selectedProduct?.imageUrl" class="dialog-product-image" />
+            <p><strong>Price: ${{ selectedProduct?.price }}</strong></p>
+            <p><strong>Owner Rating: {{ selectedProduct?.ownerRating }}</strong></p>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="isDialogVisible = false">Close</el-button>
+          </span>
+        </el-dialog>
         
     </div>
 </template>
@@ -79,7 +79,6 @@ onMounted(() => {
 const addToCart = (product: Product) => {
   cart.addToCart(product);
 };
-
 
 //点击商品名打开悬浮窗显示商品细节，之后若要加评分功能也加在悬浮窗里
 const openProductDetails = (product: Product) => {

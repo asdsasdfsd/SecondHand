@@ -58,7 +58,7 @@ export const loginUser = async (username: string, password: string): Promise<Log
   });
 
   //example: {success: true/false, token: "auth-token", message: "error or success message"}
-  return response.data;
+  return response;
 }
 
 export const fetchProducts = async (): Promise<Product[]> => {
