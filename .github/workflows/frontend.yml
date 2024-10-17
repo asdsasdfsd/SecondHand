@@ -29,8 +29,4 @@ jobs:
 
       - name: Run unit tests
         working-directory: frontend-vue
-        run: npm run test:unit
-
-#      - name: Run integration test
-#        working-directory: frontend-vue
-#        run: npm run test:integration
+        run: npm run test

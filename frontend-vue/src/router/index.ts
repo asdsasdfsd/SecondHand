@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory } from "vue-router";
-import LoginPage from "@/pages/LoginPage.vue";
-import RegisterPage from "@/pages/RegisterPage.vue";
-import UserHomePage from "@/pages/User/UserHomePage.vue";
-import ManagementPage from "@/pages/admin/ManagementPage.vue";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import LoginPage from "../pages/LoginPage.vue";
+import RegisterPage from "../pages/RegisterPage.vue";
+import UserHomePage from "../pages/User/UserHomePage.vue";
+import ManagementPage from "../pages/admin/ManagementPage.vue";
 
-import UserPaginationComponent from "@/pages/admin/admin-views/UserPaginationComponent.vue";
+import UserPaginationComponent from "../pages/admin/admin-views/UserPaginationComponent.vue";
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     name: "login",
     path: "/login",
