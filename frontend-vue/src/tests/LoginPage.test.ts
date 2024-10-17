@@ -1,4 +1,3 @@
-// LoginPage.test.ts
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi } from 'vitest';
 import LoginPage from '../pages/LoginPage.vue';
@@ -6,7 +5,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: [{ path: '/admin', name: 'Admin' }],
+    routes: [
+        { path: '/home', name: 'Home' },
+        { path: '/admin', name: 'Admin' }
+    ],
 });
 
 describe('LoginPage.vue', () => {
@@ -17,7 +19,7 @@ describe('LoginPage.vue', () => {
             },
         });
 
-        expect(wrapper.find('h2').text()).toBe('Login');
+        expect(wrapper.find('h2').text()).toBe('Sign in');
         expect(wrapper.find('input[type="text"]').exists()).toBe(true);
         expect(wrapper.find('input[type="password"]').exists()).toBe(true);
         expect(wrapper.find('button[type="submit"]').exists()).toBe(true);
@@ -39,8 +41,8 @@ describe('LoginPage.vue', () => {
         expect(window.alert).toHaveBeenCalledWith('Invalid username or password');
     });
 
-    it('redirects to /admin on valid credentials', async () => {
-        const push = vi.spyOn(router, 'push'); // 监听路由跳转
+    it('redirects to /home on valid admin credentials', async () => {
+        const push = vi.spyOn(router, 'push');
 
         const wrapper = mount(LoginPage, {
             global: {
@@ -52,6 +54,28 @@ describe('LoginPage.vue', () => {
         await wrapper.find('input[type="password"]').setValue('admin');
         await wrapper.find('form').trigger('submit.prevent');
 
-        expect(push).toHaveBeenCalledWith('/admin');
+        expect(push).toHaveBeenCalledWith({
+            path: '/home',
+            state: { isAdmin: true },
+        });
+    });
+
+    it('redirects to /home on valid user credentials', async () => {
+        const push = vi.spyOn(router, 'push');
+
+        const wrapper = mount(LoginPage, {
+            global: {
+                plugins: [router],
+            },
+        });
+
+        await wrapper.find('input[type="text"]').setValue('user');
+        await wrapper.find('input[type="password"]').setValue('user');
+        await wrapper.find('form').trigger('submit.prevent');
+
+        expect(push).toHaveBeenCalledWith({
+            path: '/home',
+            state: { isAdmin: false },
+        });
     });
 });
