@@ -19,7 +19,7 @@
             <div class="total-price">
               <p>Total for this product: ${{ item.price * item.quantity }}</p>
             </div>
-      </li>
+      <!-- </li> -->
 
       <div class="total-price">
         <h3>Total Price: ${{ cart.getTotalPrice() }}</h3>

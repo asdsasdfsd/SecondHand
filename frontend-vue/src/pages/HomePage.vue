@@ -40,7 +40,7 @@
       </el-header>
 
       <el-main>
-        <el-row :gutter="20">
+        <!-- <el-row :gutter="20">
           <el-col :span="6">
             <el-card class="product-card">
               <img src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="product-image" />
@@ -51,7 +51,7 @@
               </div>
             </el-card>
           </el-col>
-        </el-row>
+        </el-row> -->
         
         <!--调试时取消注释这段，注释上面的那段-->
         <!---
@@ -69,6 +69,7 @@
           </el-col>
         </el-row>
       -->
+        <router-view></router-view>
       </el-main>
 
       <!--悬浮窗，调试时取消注释这段-->
@@ -106,28 +107,28 @@
 <script lang="ts" setup>
 import { ref, onMounted, inject } from 'vue';
 import { useRouter } from "vue-router";
-import { ElMessage } from 'element-plus';
-import { fetchProducts, Product } from "@/api/user";
+// import { ElMessage } from 'element-plus';
+// import { fetchProducts, Product } from "@/api/user";
 
-const products = ref<Product[]>([]);
-const selectedProduct = ref<Product | null>(null);
-const isDialogVisible = ref(false);
-const cart = inject('cart') as any;
+// const products = ref<Product[]>([]);
+// const selectedProduct = ref<Product | null>(null);
+// const isDialogVisible = ref(false);
+// const cart = inject('cart') as any;
 
-const fetchAndSortProducts = async () => {
-  const fetchedProducts = await fetchProducts();
-  products.value = fetchedProducts.sort((a, b) => {
-    return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
-  });
-};
+// const fetchAndSortProducts = async () => {
+//   const fetchedProducts = await fetchProducts();
+//   products.value = fetchedProducts.sort((a, b) => {
+//     return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
+//   });
+// };
 
-onMounted(() => {
-  fetchAndSortProducts();
-});
+// onMounted(() => {
+//   fetchAndSortProducts();
+// });
 
-const addToCart = (product: Product) => {
-  cart.addToCart(product);
-};
+// const addToCart = (product: Product) => {
+//   cart.addToCart(product);
+// };
 
 const router = useRouter();
 console.log(router.getRoutes());
@@ -149,15 +150,15 @@ const handleCommand = (command: string | number | object) => {
     router.push("/login"); 
   }
 };
-//点击商品名打开悬浮窗显示商品细节，之后若要加评分功能也加在悬浮窗里
-const openProductDetails = (product: Product) => {
-  selectedProduct.value = product;
-  isDialogVisible.value = true;
-};
+// //点击商品名打开悬浮窗显示商品细节，之后若要加评分功能也加在悬浮窗里
+// const openProductDetails = (product: Product) => {
+//   selectedProduct.value = product;
+//   isDialogVisible.value = true;
+// };
 
-const handleClose = () => {
-  isDialogVisible.value = false;
-};
+// const handleClose = () => {
+//   isDialogVisible.value = false;
+// };
 
 </script>
 
