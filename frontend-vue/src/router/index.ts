@@ -1,12 +1,65 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import LoginPage from "../pages/LoginPage.vue";
-import RegisterPage from "../pages/RegisterPage.vue";
-import UserHomePage from "../pages/User/UserHomePage.vue";
-import ManagementPage from "../pages/admin/ManagementPage.vue";
+import { createRouter, createWebHistory } from "vue-router";
+import LoginPage from "@/pages/LoginPage.vue";
+import HomePage from "@/pages/HomePage.vue";
+import UserHomePage from "@/pages/User/UserHomePage.vue";
+import UserInformationPage from "@/pages/User/UserInformationPage.vue";
+import AdminHomePage from "@/pages/admin/AdminHomePage.vue";
+import RegisterPage from "@/pages/RegisterPage.vue";
 
-import UserPaginationComponent from "../pages/admin/admin-views/UserPaginationComponent.vue";
+import ManagementPage from "@/pages/admin/ManagementPage.vue";
 
-const routes: RouteRecordRaw[] = [
+
+const routes = [
+  {
+    name: "home",
+    path: "/home",
+    component: HomePage,
+    children: [
+      {
+        name: "admin",
+        path: "/admin",
+        component: () => import('../pages/admin/AdminHomePage.vue')
+      },
+      {
+        name: "user",
+        path: "/user",
+        component: () => import('../pages/User/UserHomePage.vue'),
+      },
+      {
+        name: "goods",
+        path: "/commodity",
+        meta:{
+          isShow:true,
+          title:"Home"
+        },
+        component: () => import('../pages/commodity/CommodityPage.vue')
+      },
+      {
+        name: "cart",
+        path: "/cart",
+        meta:{
+          isShow:true,
+          title:"Cart"
+        },
+        component: () => import('../pages/commodity/CartPage.vue')
+      },
+      {
+        name: "contact",
+        path: "/contact",
+        meta:{
+          isShow:true,
+          title:"About Us"
+        },
+        component: () => import('../pages/contact/ContactPage.vue')
+      },
+      {
+        name:"default",
+        path:"",
+        component: () => import('../pages/commodity/CommodityPage.vue'),
+      },
+     
+    ],
+  },
   {
     name: "login",
     path: "/login",
@@ -16,28 +69,8 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     redirect: "/login",
   },
-  {
-    name: "register",
-    path: "/register",
-    component: RegisterPage,
-  },
-  {
-    name: "user",
-    path: "/user",
-    component: UserHomePage,
-  },
-  {
-    name: "admin",
-    path: "/admin",
-    component: ManagementPage,
-    children: [
-      {
-        name: "admin-userpage",
-        path: "users",
-        component: UserPaginationComponent,
-      },
-    ],
-  },
+  
+  
 ];
 
 const router = createRouter({
@@ -48,4 +81,3 @@ const router = createRouter({
 localStorage.setItem("auth", "true");
 
 export default router;
-export { routes };

@@ -41,5 +41,5 @@ export interface ApiResponse<T> {
     first: boolean;
     numberOfElements: number;
     empty: boolean;
-  };
+  };  
 }

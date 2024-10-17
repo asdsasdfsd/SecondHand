@@ -1,5 +1,7 @@
 package iss.se.team4.secondhand.service;
 
+import iss.se.team4.secondhand.common.Result;
+import iss.se.team4.secondhand.common.dto.RegisterDto;
 import iss.se.team4.secondhand.model.User;
 
 import org.springframework.data.domain.Page;
@@ -69,4 +71,35 @@ public interface UserService {
     // User login(String username, String password);
     // void register(User user);
     // void updatePassword(Integer id, String newPassword);
+    /**
+     * user register
+     *
+     * @param registerDto the user to be registered
+     */
+    Result register(RegisterDto registerDto);
+
+    /**
+     * user login
+     *
+     * @param username
+     * @param password
+     */
+    Result login(String username, String password);
+
+    /**
+     * get user's security question
+     *
+     * @param username
+     */
+    Result getUserSecurityQuestion(String username);
+
+    Result checkSecurityQuestion(String username, String question, String answer);
+
+    Result changePassword(String username, String newPassword);
+
+    Result getUserAddress(String username);
+
+    Result setUserAddress(String username, String address1, String address2);
+
+
 }

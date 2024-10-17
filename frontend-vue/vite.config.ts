@@ -22,13 +22,15 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
-      'element-plus/theme-chalk/base.css': path.resolve(__dirname, 'src/tests/mock.css'),
     },
   },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './vitest.setup.ts',
-    css: false,
+  server: {
+    proxy: {
+      '/myapi': {
+        target: 'http://localhost:7079/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/myapi/, '')
+      }
+    },
   },
 });

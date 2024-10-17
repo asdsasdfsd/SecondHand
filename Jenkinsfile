@@ -11,13 +11,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/asdsasdfsd/SecondHand', branch: 'cicd'
+                git url: 'https://github.com/asdsasdfsd/SecondHand', branch: 'master'
             }
         }
 
         stage('Build Frontend') {
             steps {
                 dir('frontend-vue') {
+                    sh 'npm i --save-dev @types/jest'
                     sh 'npm install'   
                     sh 'npm run build' 
                 }
