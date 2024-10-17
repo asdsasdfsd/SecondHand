@@ -61,6 +61,8 @@ class UserServiceImplTest {
         User testUser = userRepository.findByUsername(registerDto.getUsername());
         assertNotNull(testUser);
         assertTrue(encoder.matches("password", testUser.getPassword()));
+        assertEquals("university town", testUser.getAddress1());
+        assertEquals("", testUser.getAddress2());
         SecurityQuestion securityQuestion = securityQuestionRepository.findByUsername(registerDto.getUsername());
         assertNotNull(securityQuestion);
         assertEquals("123", securityQuestion.getQuestion());
@@ -105,5 +107,41 @@ class UserServiceImplTest {
         SecurityQuestion securityQuestion = securityQuestionRepository.findByUsername(registerDto.getUsername());
         securityQuestionRepository.deleteById(securityQuestion.getId());
 
+    }
+
+    @Test
+    void testAddress() {
+        RegisterDto registerDto = new RegisterDto();
+        registerDto.setUsername("username");
+        registerDto.setPassword("password");
+        registerDto.setEmail("email@email.com");
+        registerDto.setPhone("123456");
+        registerDto.setAvatar("avatar");
+        registerDto.setRole("1");
+        registerDto.setSecurityQuestion("123");
+        registerDto.setSecurityAnswer("1234");
+        // first register
+        userService.register(registerDto);
+
+        User testUser = userRepository.findByUsername(registerDto.getUsername());
+
+        Result getAddrResult = userService.getUserAddress(registerDto.getUsername());
+        assertTrue(getAddrResult.isSuccess());
+        Map<String, String> userAddr = (HashMap<String, String>) getAddrResult.getData();
+        assertEquals("university town", userAddr.get("address1"));
+        assertEquals("", userAddr.get("address2"));
+
+        userService.setUserAddress(registerDto.getUsername(), "a1" , "a2");
+        Result getAddrResultAfterSet = userService.getUserAddress(registerDto.getUsername());
+
+        assertTrue(getAddrResult.isSuccess());
+        Map<String, String> userAddrAfterSet = (HashMap<String, String>) getAddrResultAfterSet.getData();
+        assertEquals("a1", userAddrAfterSet.get("address1"));
+        assertEquals("a2", userAddrAfterSet.get("address2"));
+
+
+        userService.deleteById(testUser.getId());
+        SecurityQuestion securityQuestion = securityQuestionRepository.findByUsername(registerDto.getUsername());
+        securityQuestionRepository.deleteById(securityQuestion.getId());
     }
 }
