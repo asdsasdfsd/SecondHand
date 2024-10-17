@@ -61,8 +61,10 @@ export const loginUser = async (username: string, password: string): Promise<Log
   return response;
 }
 
-export const fetchProducts = async (): Promise<Product[]> => {
-  const response = await request.get<{ data: Product[] }>(API.QueryProducts);
+export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]> => {
+  const response = await request.get<{ data: Product[] }>(API.QueryProducts, {
+    params: { page, pageSize },
+  });
   return response.data;
 };
 
