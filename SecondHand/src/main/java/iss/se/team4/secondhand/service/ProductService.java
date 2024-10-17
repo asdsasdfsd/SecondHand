@@ -1,8 +1,11 @@
 package iss.se.team4.secondhand.service;
 
 import iss.se.team4.secondhand.model.Product;
+import iss.se.team4.secondhand.model.ProductQueryString;
 import iss.se.team4.secondhand.model.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 public interface ProductService {
     /**
@@ -25,4 +28,11 @@ public interface ProductService {
      * @param product the product with updated information
      */
     void updateById(Product product);
+
+    /**
+     * Query products by conditions and display by page.
+     *
+     * @param productQueryString the search conditions and page info
+     */
+    List<Product> queryByCondition(ProductQueryString productQueryString);
 }

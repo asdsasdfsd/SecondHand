@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="iss.se.team4.secondhand.mapper.ProductMapper">
+    <select id="queryByCondition" resultType="iss.se.team4.secondhand.model.Product">
+        select * from products
+        <where>
+            <if test="description != null">
+                and name like concat('%', #{description}, '%')
+                or description like concat('%', #{description}, '%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="maxPrice != null">
+                and price &lt; #{maxPrice}
+            </if>
+            <if test="minPrice != null">
+                and price > #{minPrice}
+            </if>
+            and status = 'published'
+        </where>
+        limit #{startPage}, #{pageSize}
+    </select>
+</mapper>
