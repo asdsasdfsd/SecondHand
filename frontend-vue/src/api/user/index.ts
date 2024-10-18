@@ -4,7 +4,8 @@ import axios from "axios";
 enum API {
   UserManagement = "/api/user/selectPage",
   Login = "/api/user/login",
-  ProductManagement = "/api/products/selectPage",
+  ProductManagement = "/api/product",
+  QueryProducts = "/api/product/query",
 }
 
 interface LoginResponse {
@@ -57,11 +58,13 @@ export const loginUser = async (username: string, password: string): Promise<Log
   });
 
   //example: {success: true/false, token: "auth-token", message: "error or success message"}
-  return response.data;
+  return response;
 }
 
-export const fetchProducts = async (): Promise<Product[]> => {
-  const response = await request.get<{ data: Product[] }>(API.ProductManagement);
+export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]> => {
+  const response = await request.get<{ data: Product[] }>(API.QueryProducts, {
+    params: { page, pageSize },
+  });
   return response.data;
 };
 

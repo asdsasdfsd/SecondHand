@@ -21,6 +21,9 @@
             />
           </div>
           <button type="submit" class="login-button">Login</button>
+          <el-divider />
+          <h3>Join now</h3>
+          <button @click="handleRegister" class="login-button">Register</button>
         </form>
       </div>
 
@@ -29,13 +32,64 @@
         <p>Log in to continue shopping.</p>
       </div>
     </div>
+    <div class="dialog">
+      <el-dialog
+      v-model="dialogVisible"
+      title="Register"
+      width="500"
+      :before-close="handleClose"
+      >
+      <!-- <span>This is a message</span> -->
+      <el-form :model="form" label-width="auto" style="max-width: 600px">
+        <el-form-item label="User name">
+          <el-input v-model="form.username" />
+        </el-form-item>
+        <el-form-item label="Password">
+          <el-input
+          v-model="form.firstInput"
+          style="width: 240px"
+          type="password"
+          placeholder="Please input password"
+          />
+        </el-form-item>
+        <el-form-item label="Confirm password">
+          <el-input
+          v-model="form.secondInput"
+          style="width: 240px"
+          type="password"
+          placeholder="Please input password again"
+          />
+        </el-form-item>
+        <el-form-item label="Email">
+          <el-input v-model="form.email" />
+        </el-form-item> 
+        <el-form-item label="Phone number">
+          <el-input v-model="form.phone" />
+        </el-form-item>
+
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="handleConfirm">
+            Confirm
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
+
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { loginUser } from "@/api/user";
-import { ref } from "vue";
+import { log } from "console";
+import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
+import axios from "axios";
+import { ElMessage } from 'element-plus'
+import type { PhoneFilled } from "@element-plus/icons-vue";
 
 export default {
   name: "LoginPage",
@@ -80,14 +134,77 @@ export default {
       }
     };
 
+    //新增注册功能
+    const dialogVisible = ref(false);
+    const handleRegister = () => {
+      dialogVisible.value = true;
+      // console.log(dialogVisible);
+    }
+    const handleClose = () => {
+      dialogVisible.value = false;
+    }
+
+    const form = reactive({
+      username: '',
+      firstInput: '',
+      secondInput: '',
+      password: '',
+      email: '',
+      phone: '',
+    })
+
+    const postData = async() =>{
+    try {
+      console.log("register user: ");
+      if(form.firstInput != form.secondInput){
+        ElMessage({
+          showClose: true,
+          message: 'Sorry, the password are not inconsistent.',
+          type: 'error',
+        })
+        return ;
+      }
+      else{
+        form.password = form.firstInput;
+      }
+      const response = await axios.post('myapi/user/register', 
+        {
+          username: form.username,
+          email: form.email,
+          phone: form.phone,
+          role: 0,
+          password: form.password,
+          // name: form.username,
+        }
+      );
+      console.log('post response:', response.data);
+    } catch (error) {
+      console.log(error);
+    }
+    };
+
+    const handleConfirm = () => {
+      postData();
+      dialogVisible.value = false;
+    };
     return {
       username,
       password,
       login,
+      dialogVisible,
+      handleRegister,
+      handleClose,
+      form,
+      postData,
+      handleConfirm,
     };
   },
 };
 </script>
+
+<!-- <script lang="ts" setup>
+  
+</script> -->
 
 <style scoped>
 .login-page{

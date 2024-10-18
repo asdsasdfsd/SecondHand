@@ -2,31 +2,32 @@
   <div class="cart-container">
     <h2 class="cart-title">Cart List</h2>
 
-    <ul v-if="cart.items.length > 0" class="cart-list">
+    <div v-if="cart.items.length > 0">
+      <el-row :gutter="20" v-for="item in cart.items" :key="item.id">
+        <el-col :span="24">
+          <el-card>
             <img :src="item.imageUrl" class="cart-product-image" />
-            <div class="item-details">
-              <h3>{{ item.name }}</h3>
-              <p>Price: ${{ item.price }}</p>
-              <p>Quantity: {{ item.quantity }}</p>
-            </div>
-            <!--加减商品数量的按钮-->
-            <div class="quantity-controls">
-              <el-button @click="decreaseQuantity(item)">-</el-button>
+            <h3 class="product-name">{{ item.name }}</h3>
+            <p class="product-price">Price: ${{ item.price }}</p>
+            <p>Owner: {{ item.owner }}</p>
+
+            <div class="quantity-control">
+              <el-button @click="decreaseQuantity(item)" class="quantity-button">-</el-button>
               <span>{{ item.quantity }}</span>
-              <el-button @click="increaseQuantity(item)">+</el-button>
+              <el-button @click="increaseQuantity(item)" class="quantity-button">+</el-button>
             </div>
 
-            <div class="total-price">
-              <p>Total for this product: ${{ item.price * item.quantity }}</p>
-            </div>
-      </li>
+            <p class="total-item-price">Total for this product: ${{ item.price * item.quantity }}</p>
+          </el-card>
+        </el-col>
+      </el-row>
 
       <div class="total-price">
         <h3>Total Price: ${{ cart.getTotalPrice() }}</h3>
       </div>
 
-      <el-button type="danger" @click="clearCart">Clear Cart</el-button>
-    </ul>
+      <el-button type="danger" @click="clearCart" class="clear-cart-button">Clear Cart</el-button>
+    </div>
 
     <div v-else>
       <p>Your cart is empty.</p>
@@ -61,82 +62,57 @@ const clearCart = () => {
 <style scoped>
 .cart-container {
   padding: 20px;
-  background-color: #f0f4ff;
+  background-color: #f9f9f9;
 }
 
 .cart-title {
-  font-size: 24px;
+  color: #3b5998;
+  font-size: 1.5rem;
   margin-bottom: 20px;
-  color: #1e3a8a; 
 }
 
-.cart-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.product-name {
+  color: #2a5298;
+  font-weight: bold;
 }
 
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: white;
+.product-price, .total-item-price {
+  color: #4b8fe2;
 }
 
-.product-image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.item-details {
-  flex-grow: 1;
-  margin-left: 15px;
-}
-
-.item-details h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
-  color: #1e3a8a; 
-}
-
-.item-details p {
-  font-size: 16px;
-  color: #4a5568; 
-}
-
-.quantity-controls {
+.quantity-control {
   display: flex;
   align-items: center;
 }
 
-.quantity-controls span {
-  margin: 0 10px;
-  font-size: 18px;
-}
-
-.el-button {
-  background-color: #3b82f6; 
-  color: white;
+.quantity-button {
+  background-color: #4a90e2;
   border-radius: 5px;
+  color: white;
 }
 
-.el-button:hover {
-  background-color: #2563eb;
-}
-
-.total-price {
-  text-align: right;
-  margin-top: 20px;
+.quantity-button:hover {
+  background-color: #357abd;
 }
 
 .total-price h3 {
-  font-size: 22px;
-  color: #1e3a8a; 
+  color: #1c468e;
+  font-size: 1.8rem;
+  text-align: right;
+}
+
+.clear-cart-button {
+  background-color: #d9534f;
+  color: white;
+}
+
+.clear-cart-button:hover {
+  background-color: #c9302c;
+}
+
+.cart-product-image {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
 }
 </style>
