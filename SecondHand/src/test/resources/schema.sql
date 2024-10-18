@@ -1,4 +1,3 @@
-
 CREATE TABLE USERS (
                        id INT PRIMARY KEY AUTO_INCREMENT,
                        username VARCHAR(50) UNIQUE NOT NULL,
@@ -17,5 +16,5 @@ CREATE TABLE USER_SECURITY_QUESTIONS (
                                          username VARCHAR(50) NOT NULL,
                                          question VARCHAR(255) NOT NULL,
                                          answer VARCHAR(255) NOT NULL,
-                                         FOREIGN KEY (username) REFERENCES USERS(username)
+                                         FOREIGN KEY (username) REFERENCES USERS(username) ON DELETE CASCADE
 );
