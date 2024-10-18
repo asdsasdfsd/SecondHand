@@ -1,3 +1,4 @@
+
 CREATE TABLE USERS (
                        id INT PRIMARY KEY AUTO_INCREMENT,
                        username VARCHAR(50) UNIQUE NOT NULL,
@@ -9,4 +10,12 @@ CREATE TABLE USERS (
                        address2 VARCHAR(255),
                        avatar VARCHAR(255),
                        role VARCHAR(50)
+);
+
+CREATE TABLE USER_SECURITY_QUESTIONS (
+                                         id INT PRIMARY KEY AUTO_INCREMENT,
+                                         username VARCHAR(50) NOT NULL,
+                                         question VARCHAR(255) NOT NULL,
+                                         answer VARCHAR(255) NOT NULL,
+                                         FOREIGN KEY (username) REFERENCES USERS(username)
 );
