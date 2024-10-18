@@ -48,6 +48,15 @@ import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { addProduct } from "@/api/user"; 
 
+interface UploadResponse {
+  url: string; 
+}
+
+interface FileItem {
+  name: string;
+  url: string; 
+}
+
 const storedUsername = localStorage.getItem("username");
 
 const productForm = ref({
@@ -60,7 +69,7 @@ const productForm = ref({
 });
 
 const productFormRef = ref(null);
-const fileList = ref([]);
+const fileList = ref<FileItem[]>([]);
 
 const handleImageSuccess = (response: any, file: any) => {
   productForm.value.imageUrl = response.url; // Assume backend returns image URL
