@@ -5,7 +5,7 @@ import UserHomePage from "@/pages/User/UserHomePage.vue";
 import UserInformationPage from "@/pages/User/UserInformationPage.vue";
 import AdminHomePage from "@/pages/admin/AdminHomePage.vue";
 import RegisterPage from "@/pages/RegisterPage.vue";
-
+import CreateCommodityPage from "@/pages/commodity/CreatePage.vue";
 import ManagementPage from "@/pages/admin/ManagementPage.vue";
 
 
@@ -42,6 +42,15 @@ const routes = [
           title:"Cart"
         },
         component: () => import('../pages/commodity/CartPage.vue')
+      },
+      {
+        name: "create",
+        path: "/create",
+        meta:{
+          isShow:true,
+          title:"Create"
+        },
+        component: () => import('../pages/commodity/CreatePage.vue')
       },
       {
         name: "contact",
