@@ -1,6 +1,5 @@
 package iss.se.team4.secondhand.service;
 
-import iss.se.team4.secondhand.util.MailUtils;
 import iss.se.team4.secondhand.exception.SendMailException;
 
 public interface MailService {
@@ -9,8 +8,8 @@ public interface MailService {
     public void sendWelcomeEmail(String emailAddr, String username) throws SendMailException;
 
     // send a notice email to seller when a buyer "wanted" his/her product
-    public void sendWantedEmail(String emailAddr, String username);
+    public void sendWantedEmail(String emailAddr, String username, String productInfo) throws SendMailException;
 
     // send a customize email
-    public void sendCustomizeEmail(String emailAddr, String username, String subject, String body);
+    public void sendCustomizeEmail(String emailAddr, String username, String updatedItem, String itemInfo) throws SendMailException;
 }

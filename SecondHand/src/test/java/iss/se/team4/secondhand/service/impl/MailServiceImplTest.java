@@ -21,10 +21,12 @@ class MailServiceImplTest {
     }
 
     @Test
-    void sendWantedEmail() {
+    void sendWantedEmail() throws SendMailException {
+        mailService.sendWantedEmail("jianghc_nus@163.com", "Felix", "iPhone 14");
     }
 
     @Test
-    void sendCustomizeEmail() {
+    void sendCustomizeEmail() throws SendMailException {
+        mailService.sendCustomizeEmail("jianghc_nus@163.com", "Felix", "phone number", "86806932");
     }
 }
