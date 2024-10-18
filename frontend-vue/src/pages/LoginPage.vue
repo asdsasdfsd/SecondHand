@@ -105,6 +105,7 @@ export default {
 
         if(response.success){
           localStorage.setItem("token", response.token || "");
+          localStorage.setItem("username", username.value);
           router.push("/home");
         } else {
           alert(response.message || "Invalid username or password");
@@ -270,8 +271,8 @@ input:focus{
 }
 
 .gradient-box {
-  width: 50%; /* Take up the other half of the space */
-  background: linear-gradient(to left, #2fb2ae, #5ecbf6); /* Gradient colors */
+  width: 50%; 
+  background: linear-gradient(to left, #2fb2ae, #5ecbf6); 
   color: white;
   padding: 40px;
   display: flex;

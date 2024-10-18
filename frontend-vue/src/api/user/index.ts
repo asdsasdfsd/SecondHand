@@ -6,6 +6,7 @@ enum API {
   Login = "/api/user/login",
   ProductManagement = "/api/product",
   QueryProducts = "/api/product/query",
+  AddProduct = "apo/product/add",
 }
 
 interface LoginResponse {
@@ -13,32 +14,7 @@ interface LoginResponse {
   token?: string;
   message?: string;
 }
-// const service = axios.create({
-//   baseURL:"http://localhost:7079/api",
-//   timeout:5000,
-//   headers:{
-//     "Content-Type":"application/json;charset=utf-8",
-//   }
-// })
-// export interface UserListForm{
-//   userId:number
-//   // username:string
-//   // password:string
-// }
-// export class UserList{
-//   ruleForm:UserListForm={
-//     userId:1,
-//     // username:"",
-//     // password:"",
-//   }
-// }
 
-
-// interface UsersPageResponse {
-//   users: User[];
-//   totalPages: number;
-//   totalElements: number;
-// }
 export interface Product {
   id: number;
   amount: number;
@@ -68,6 +44,17 @@ export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]>
   return response.data;
 };
 
+export const addProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
+  const response = await request.post<Product>(API.AddProduct, product);
+
+  if (response.status === 200 && response.data) {
+    console.log("Product added successfully", response.data);
+    return response.data; 
+  } else {
+    console.error("Failed to add product");
+    throw new Error("Failed to add product");
+  }
+};
 
 export const fetchUsersPage = async (
   pageNum = 0,
@@ -84,35 +71,6 @@ export const fetchUsersPage = async (
     }
   );
 
-// export const fetchUsersPage = async (
-//   pageNum = 0,
-//   pageSize = 10
-// ): Promise<UsersPageResponse> => {
-//   const response = await request.post<ApiResponse<User>>(
-//     API.UserManagement,
-//     null,
-//     {
-//       params: {
-//         pageNum,
-//         pageSize,
-//       },
-//     }
-//   );
-
-//   console.log(response);
-
-//   return {
-//     users: (response.data as any).content,
-//     totalPages: (response.data as any).totalPages,
-//     totalElements: (response.data as any).totalElements,
-//   };
-// };
-
-// service.interceptors.request.use((config)=>{
-//   if(localStorage.getItem('token')){
-//     config.headers.token = 
-//   }
-// })
   return {
     users: (response.data as any).content,
     totalPages: (response.data as any).totalPages,
