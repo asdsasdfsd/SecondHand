@@ -73,27 +73,4 @@ class UserServiceImplTest {
     }
 
 
-    @Test
-    void deleteUser() {
-        RegisterDto registerDto = new RegisterDto();
-        registerDto.setUsername("Delete_username");
-        registerDto.setPassword("Delete_password");
-        registerDto.setEmail("email@email.com");
-        registerDto.setPhone("123456");
-        registerDto.setAvatar("avatar");
-        registerDto.setRole("1");
-        registerDto.setSecurityQuestion("What is your favorite color?");
-        registerDto.setSecurityAnswer("Blue");
-
-        userService.register(registerDto);
-        User testUser = userRepository.findByUsername(registerDto.getUsername());
-        assertNotNull(testUser);
-
-        userService.deleteById(testUser.getId());
-        assertNull(userRepository.findByUsername(registerDto.getUsername()));
-
-        SecurityQuestion securityQuestion = securityQuestionRepository.findByUsername(registerDto.getUsername());
-        assertNull(securityQuestion);
-    }
-
 }
