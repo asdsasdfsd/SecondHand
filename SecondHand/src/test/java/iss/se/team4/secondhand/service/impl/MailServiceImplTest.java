@@ -1,5 +1,6 @@
 package iss.se.team4.secondhand.service.impl;
 
+import iss.se.team4.secondhand.exception.SendMailException;
 import iss.se.team4.secondhand.service.MailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,8 @@ class MailServiceImplTest {
     private MailService mailService;
 
     @Test
-    void sendWelcomeEmail() {
-        mailService.sendWelcomeEmail("2528827249@qq.com", "Parzival");
+    void sendWelcomeEmail() throws SendMailException {
+        mailService.sendWelcomeEmail("jianghc_nus@163.com", "Felix");
     }
 
     @Test
