@@ -1,6 +1,6 @@
-package iss.se.team4.secondhand.util;
+package iss.se.team4.mailmicroservice.utils;
 
-import iss.se.team4.secondhand.exception.SendMailException;
+import iss.se.team4.mailmicroservice.exception.SendMailException;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
