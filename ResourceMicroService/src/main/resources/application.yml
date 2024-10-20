@@ -11,6 +11,6 @@ aliyun:
   oss:
     bucket-name: project2-bucket
     endpoint: oss-ap-southeast-1.aliyuncs.com
-    access-key-id: LTAI5t9KUxtTzVUKSyWH5xXb
-    access-key-secret: iZQ5sWckGhcGe3h8lmUdKDQMYvjIcW
+    access-key-id: 123
+    access-key-secret: 123
     file-host: secondHand
