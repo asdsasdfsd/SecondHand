@@ -1,7 +1,6 @@
 package iss.se.team4.mailmicroservice.pojo;
 
 
-import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Data
