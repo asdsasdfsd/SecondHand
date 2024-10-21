@@ -114,8 +114,8 @@ public class UserServiceImpl implements UserService {
 
             SecurityQuestion securityQuestion = new SecurityQuestion();
             securityQuestion.setUsername(registerDto.getUsername());
-            securityQuestion.setQuestion(registerDto.getSecurityQuestion());
-            securityQuestion.setAnswer(registerDto.getSecurityAnswer());
+            securityQuestion.setQuestion(registerDto.getSecurityQuestion()==null?"":registerDto.getSecurityQuestion());
+            securityQuestion.setAnswer(registerDto.getSecurityAnswer()==null?"":registerDto.getSecurityAnswer());
             securityQuestionRepository.save(securityQuestion);
 
             return Result.success();
