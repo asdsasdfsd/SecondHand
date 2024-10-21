@@ -23,7 +23,7 @@
         <el-form-item label="Product Image" prop="image">
           <el-upload
             class="upload-demo"
-            action="/api/file/upload"
+            action="myapi/file/upload"
             list-type="picture-card"
             :on-success="handleImageSuccess"
             :on-remove="handleImageRemove"
@@ -39,6 +39,20 @@
           <el-button type="primary" @click="submitForm" class="create-button">Submit</el-button>
         </el-form-item>
       </el-form>
+
+      <el-dialog :visible.sync="dialogVisibleSuccess" title="Success">
+        <p>{{ successMessage }}</p>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisibleSuccess = false">OK</el-button>
+        </span>
+      </el-dialog>
+
+      <el-dialog :visible.sync="dialogVisibleError" title="Error">
+        <p>{{ errorMessage }}</p>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisibleError = false">Close</el-button>
+        </span>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -73,6 +87,11 @@ const productForm = ref({
 const productFormRef = ref(null);
 const fileList = ref<FileItem[]>([]);
 
+const dialogVisibleSuccess = ref(false);
+const dialogVisibleError = ref(false);
+const successMessage = ref('');
+const errorMessage = ref('');
+
 const handleImageSuccess = (response: UploadResponse, file: any) => {
   if (response.success) {
     productForm.value.imageUrl = response.data;
@@ -104,7 +123,7 @@ const submitForm = async () => {
           price: productForm.value.price,
           imageUrl: productForm.value.imageUrl,
           owner: localStorage.getItem("username") as string,
-          ownerRating: 0, 
+          ownerRating: 0,
           releaseDate: new Date().toISOString(),
         });
 

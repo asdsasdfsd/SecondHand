@@ -2,11 +2,11 @@ import request from "@/utils/request";
 import type { ApiResponse, User } from "./type";
 import axios from "axios";
 enum API {
-  UserManagement = "/api/user/selectPage",
-  Login = "/api/user/login",
-  ProductManagement = "/api/product",
-  QueryProducts = "/api/product/query",
-  AddProduct = "apo/product/add",
+  UserManagement = "myapi/user/selectPage",
+  Login = "myapi/user/login",
+  ProductManagement = "myapi/product",
+  QueryProducts = "myapi/product/query",
+  AddProduct = "myapi/product/add",
 }
 
 interface LoginResponse {
@@ -47,7 +47,7 @@ export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]>
 export const addProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
   const response = await request.post<Product>(API.AddProduct, product);
 
-  if (response.status === 200 && response.data) {
+  if (response.status === 200 && response.success) {
     console.log("Product added successfully", response.data);
     return response.data; 
   } else {
