@@ -29,7 +29,7 @@ public class FileServiceImpl implements FileService {
             if (result != null) {
                 JSONObject jsonObject = JSONUtil.parseObj(result);
                 String data = jsonObject.get("data").toString();
-                String key = JSONUtil.parseObj(data).get("key").toString();
+                String key = JSONUtil.parseObj(data).get("picUrl").toString();
                 return Result.success(key);
             }
         } catch (Exception e) {
