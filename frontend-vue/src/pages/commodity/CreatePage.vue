@@ -23,7 +23,7 @@
         <el-form-item label="Product Image" prop="image">
           <el-upload
             class="upload-demo"
-            action="/api/product/add"
+            action="/api/file/upload"
             list-type="picture-card"
             :on-success="handleImageSuccess"
             :on-remove="handleImageRemove"
@@ -44,12 +44,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, reactive } from "vue";
 import { ElMessage } from 'element-plus';
 import { addProduct } from "@/api/user"; 
 
 interface UploadResponse {
-  url: string; 
+  success: boolean;
+  message: string;
+  data: string; 
 }
 
 interface FileItem {
@@ -71,9 +73,13 @@ const productForm = ref({
 const productFormRef = ref(null);
 const fileList = ref<FileItem[]>([]);
 
-const handleImageSuccess = (response: any, file: any) => {
-  productForm.value.imageUrl = response.url; // Assume backend returns image URL
-  fileList.value = [file];
+const handleImageSuccess = (response: UploadResponse, file: any) => {
+  if (response.success) {
+    productForm.value.imageUrl = response.data;
+    fileList.value = [file];
+  } else {
+    ElMessage.error(response.message || 'Image upload failed');
+  }
 };
 
 const handleImageRemove = () => {
@@ -98,14 +104,14 @@ const submitForm = async () => {
           price: productForm.value.price,
           imageUrl: productForm.value.imageUrl,
           owner: localStorage.getItem("username") as string,
-          ownerRating: 0, // 默认评分
+          ownerRating: 0, 
           releaseDate: new Date().toISOString(),
         });
 
         ElMessage.success('Product created successfully');
         formRef.resetFields();
         fileList.value = [];
-        productForm.value.imageUrl = ''; // Clear image URL after successful creation
+        productForm.value.imageUrl = ''; 
       } catch (error) {
         ElMessage.error('Failed to create product');
         console.error(error);
