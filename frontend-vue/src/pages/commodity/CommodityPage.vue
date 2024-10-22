@@ -22,7 +22,7 @@
                 <h3 @click="openProductDetails(product)">{{ product.name }}</h3>
                 <p>Amount: {{ product.amount }}</p>
                 <p><strong>${{ product.price }}</strong></p>
-                <el-button type="primary" @click="addToCart(product)">Add to Cart</el-button>
+                <el-button type="primary" @click="addToCart(product)">Add to Favorites</el-button>
               </div>
             </el-card>
           </el-col>

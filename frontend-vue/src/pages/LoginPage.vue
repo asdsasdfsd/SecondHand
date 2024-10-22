@@ -97,7 +97,7 @@ export default {
     const username = ref("");
     const password = ref("");
     const router = useRouter();
-
+    /*
     const login = async() => {
       try {
         const response = await loginUser(username.value, password.value);
@@ -114,8 +114,8 @@ export default {
         alert("An error occurred while logging in.");
       }
     };
+    */
     
-    /*
     const login = () => {
       if (username.value === "admin" && password.value === "admin") {
         router.push({
@@ -133,7 +133,7 @@ export default {
         alert("Invalid username or password");
       }
     };
-*/
+
 
     //新增注册功能
     const dialogVisible = ref(false);

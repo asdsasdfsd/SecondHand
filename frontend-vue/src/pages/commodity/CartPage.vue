@@ -1,6 +1,6 @@
 <template>
   <div class="cart-container">
-    <h2 class="cart-title">Cart List</h2>
+    <h2 class="cart-title">Favorites List</h2>
 
     <div v-if="cart.items.length > 0">
       <el-row :gutter="20" v-for="item in cart.items" :key="item.id">
@@ -26,11 +26,11 @@
         <h3>Total Price: ${{ cart.getTotalPrice() }}</h3>
       </div>
 
-      <el-button type="danger" @click="clearCart" class="clear-cart-button">Clear Cart</el-button>
+      <el-button type="danger" @click="clearCart" class="clear-cart-button">Clear Favorites</el-button>
     </div>
 
     <div v-else>
-      <p>Your cart is empty.</p>
+      <p>Your Favorites is empty.</p>
     </div>
   </div>
 </template>

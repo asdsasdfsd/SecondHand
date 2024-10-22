@@ -39,7 +39,7 @@ const routes = [
         path: "/cart",
         meta:{
           isShow:true,
-          title:"Cart"
+          title:"Favorites"
         },
         component: () => import('../pages/commodity/CartPage.vue')
       },
