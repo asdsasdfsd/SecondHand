@@ -1,6 +1,6 @@
 <template>
     <div>
-      <!--sample，可注释掉这一段-->
+      <!--
       <el-row :gutter="20">
           <el-col :span="6">
             <el-card class="product-card">
@@ -13,7 +13,7 @@
             </el-card>
           </el-col>
         </el-row>
-        
+      -->  
         <el-row :gutter="20">
           <el-col :span="6" v-for="product in products" :key="product.id">
             <el-card class="product-card">

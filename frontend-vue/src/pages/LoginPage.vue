@@ -98,8 +98,7 @@ export default {
     const password = ref("");
     const router = useRouter();
 
-    //因为暂时没和后端连上先注释了API接口使用默认密码登陆
-    /*const login = async() => {
+    const login = async() => {
       try {
         const response = await loginUser(username.value, password.value);
 
@@ -114,9 +113,9 @@ export default {
         console.error("Login failed:", error);
         alert("An error occurred while logging in.");
       }
-    }；*/
+    }；
     
-    //后端联调时注释这段，取消注释上一段
+    /*
     const login = () => {
       if (username.value === "admin" && password.value === "admin") {
         router.push({
@@ -134,6 +133,7 @@ export default {
         alert("Invalid username or password");
       }
     };
+*/
 
     //新增注册功能
     const dialogVisible = ref(false);
