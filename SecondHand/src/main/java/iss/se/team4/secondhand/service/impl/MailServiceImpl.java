@@ -1,5 +1,7 @@
 package iss.se.team4.secondhand.service.impl;
 
+import cn.hutool.json.JSONUtil;
+import iss.se.team4.secondhand.config.MailServerConfig;
 import iss.se.team4.secondhand.service.MailService;
 import iss.se.team4.secondhand.util.HttpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,8 @@ public class MailServiceImpl implements MailService {
     private HttpUtils httpUtils;
 
     // TODO 改成远程服务器地址或配置项
-    private static final String EMAIL_SERVER_URL = "http://localhost:1111";
+    @Autowired
+    private MailServerConfig mailServerConfig;
 
     private static final String WELCOME_EMAIL_PATH = "/api/mail/welcome";
 
@@ -25,17 +28,16 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendWelcomeEmail(String emailAddr, String username) {
-        String url = EMAIL_SERVER_URL + WELCOME_EMAIL_PATH;
+        String url = mailServerConfig.getUrl() + WELCOME_EMAIL_PATH;
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        EmailRequest emailRequest = new EmailRequest(emailAddr, "Welcome!", "Welcome:" + username);
-
-        String requestBody = toJson(emailRequest);
-
+        Map<String, String> welcomeEmailRequest = new HashMap<>();
+        welcomeEmailRequest.put("emailAddress", emailAddr);
+        welcomeEmailRequest.put("userName", username);
 
         try {
-            httpUtils.sendPost(url, requestBody, headers);
+            httpUtils.sendPost(url, JSONUtil.toJsonStr(welcomeEmailRequest), headers);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -43,55 +45,29 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendWantedEmail(String emailAddr, String username) {
+    public void sendWantedEmail(String buyerEmail, String buyerName, String sellerEmail, String sellerName, String productInfo) {
+        String url = mailServerConfig.getUrl() + WANTED_EMAIL_PATH;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+
+        Map<String, String> wantedEmailRequest = new HashMap<>();
+        wantedEmailRequest.put("buyerEmail", buyerEmail);
+        wantedEmailRequest.put("buyerName", buyerName);
+        wantedEmailRequest.put("sellerEmail", sellerEmail);
+        wantedEmailRequest.put("sellerName", sellerName);
+        wantedEmailRequest.put("productInfo", productInfo);
+
+        try {
+            httpUtils.sendPost(url, JSONUtil.toJsonStr(wantedEmailRequest), headers);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void sendCustomizeEmail(String emailAddr, String username, String subject, String body) {
 
-    }
-
-    private String toJson(EmailRequest emailRequest) {
-        // 这里可以使用Gson、Jackson等JSON库来进行序列化
-        return "{ \"to\": \"" + emailRequest.getTo() + "\", " +
-                "\"subject\": \"" + emailRequest.getSubject() + "\", " +
-                "\"body\": \"" + emailRequest.getBody() + "\" }";
-    }
-
-    public static class EmailRequest {
-        private String to;
-        private String subject;
-        private String body;
-
-        public EmailRequest(String to, String subject, String body) {
-            this.to = to;
-            this.subject = subject;
-            this.body = body;
-        }
-
-        public String getTo() {
-            return to;
-        }
-
-        public void setTo(String to) {
-            this.to = to;
-        }
-
-        public String getSubject() {
-            return subject;
-        }
-
-        public void setSubject(String subject) {
-            this.subject = subject;
-        }
-
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
     }
 }

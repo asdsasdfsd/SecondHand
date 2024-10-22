@@ -7,6 +7,7 @@ import iss.se.team4.secondhand.model.SecurityQuestion;
 import iss.se.team4.secondhand.model.User;
 import iss.se.team4.secondhand.repository.SecurityQuestionRepository;
 import iss.se.team4.secondhand.repository.UserRepository;
+import iss.se.team4.secondhand.service.MailService;
 import iss.se.team4.secondhand.service.UserService;
 
 import iss.se.team4.secondhand.util.JwtUtils;
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private SecurityQuestionRepository  securityQuestionRepository;
+
+    @Autowired
+    private MailService mailService;
 
     private static final String DEFAULT_ADDRESS = "university town";
 
@@ -118,6 +122,7 @@ public class UserServiceImpl implements UserService {
             securityQuestion.setAnswer(registerDto.getSecurityAnswer()==null?"":registerDto.getSecurityAnswer());
             securityQuestionRepository.save(securityQuestion);
 
+            mailService.sendWelcomeEmail(registerDto.getEmail(), registerDto.getUsername());
             return Result.success();
         } else {
             return Result.failure("Account already exists");
