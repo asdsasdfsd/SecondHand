@@ -11,6 +11,7 @@ import iss.se.team4.secondhand.service.MailService;
 import iss.se.team4.secondhand.service.UserService;
 
 import iss.se.team4.secondhand.util.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     //dependency inject
@@ -122,7 +124,11 @@ public class UserServiceImpl implements UserService {
             securityQuestion.setAnswer(registerDto.getSecurityAnswer()==null?"":registerDto.getSecurityAnswer());
             securityQuestionRepository.save(securityQuestion);
 
-            mailService.sendWelcomeEmail(registerDto.getEmail(), registerDto.getUsername());
+            try {
+                mailService.sendWelcomeEmail(registerDto.getEmail(), registerDto.getUsername());
+            } catch (Exception e) {
+                log.error("send email fail: ", e.getMessage());
+            }
             return Result.success();
         } else {
             return Result.failure("Account already exists");
