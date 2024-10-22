@@ -31,11 +31,14 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendWantedEmail(String emailAddr, String username, String productInfo) throws SendMailException {
+    public void sendWantedEmail(String buyerEmail, String buyerName, String sellerEmail, String sellerName, String productInfo) throws SendMailException {
         MailUtils.subject("[SecondHand] Someone Likes Your Item")
                 .from("SecondHand Team")
-                .to(emailAddr)
-                .text("Hi " + username + "! Someone is interested in your " + productInfo + ". Come and see details. \n\nHappy trading!")
+                .to(sellerEmail)
+                .text("Hi " + sellerName + "! Someone is interested in your product: " + productInfo + ". Come and see details. See the buyer Info below:" +
+                        "\n\nbuyerName: "+ buyerName +
+                        "\n\nbuyerEmail: "+ buyerEmail +
+                        "\n\nHappy trading!")
                 .send();
         Assert.assertTrue(true);
     }

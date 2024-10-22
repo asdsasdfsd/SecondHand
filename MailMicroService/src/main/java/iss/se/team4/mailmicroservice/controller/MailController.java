@@ -1,5 +1,6 @@
 package iss.se.team4.mailmicroservice.controller;
 
+import iss.se.team4.mailmicroservice.dto.WantedEmailDto;
 import iss.se.team4.mailmicroservice.exception.SendMailException;
 import iss.se.team4.mailmicroservice.pojo.EmailContent;
 import iss.se.team4.mailmicroservice.pojo.Result;
@@ -23,8 +24,9 @@ public class MailController {
     }
 
     @PostMapping("/wanted")
-    public Result sendWantedMail(@RequestBody EmailContent emailContent) throws SendMailException {
-        mailService.sendWantedEmail(emailContent.getEmailAddress(), emailContent.getUserName(), emailContent.getProductInfo());
+    public Result sendWantedMail(@RequestBody WantedEmailDto wantedEmailDto) throws SendMailException {
+        mailService.sendWantedEmail(wantedEmailDto.getBuyerEmail(), wantedEmailDto.getBuyerName(), wantedEmailDto.getSellerEmail(),
+                wantedEmailDto.getSellerName(), wantedEmailDto.getProductName());
         return Result.success();
     }
 
