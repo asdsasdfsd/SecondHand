@@ -47,7 +47,7 @@ export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]>
 export const addProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
   const response = await request.post<Product>(API.AddProduct, product);
 
-  if (response.status === 200 && response.success) {
+  if (response.success) {
     console.log("Product added successfully", response.data);
     return response.data; 
   } else {

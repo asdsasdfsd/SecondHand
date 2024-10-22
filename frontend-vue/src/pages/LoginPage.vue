@@ -113,7 +113,7 @@ export default {
         console.error("Login failed:", error);
         alert("An error occurred while logging in.");
       }
-    }；
+    };
     
     /*
     const login = () => {
