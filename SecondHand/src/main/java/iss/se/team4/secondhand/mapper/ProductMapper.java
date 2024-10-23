@@ -10,4 +10,7 @@ import java.util.List;
 public interface ProductMapper {
     //query
     List<Product> queryByCondition(ProductQueryString productQueryString);
+
+    //query by page
+    List<Product> queryByPage(int offset, int limit);
 }

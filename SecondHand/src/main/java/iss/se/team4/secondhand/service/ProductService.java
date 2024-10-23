@@ -1,9 +1,10 @@
 package iss.se.team4.secondhand.service;
 
+import iss.se.team4.secondhand.common.Result;
+import iss.se.team4.secondhand.common.dto.AddProductDto;
+import iss.se.team4.secondhand.common.dto.UpdateProductDto;
 import iss.se.team4.secondhand.model.Product;
 import iss.se.team4.secondhand.model.ProductQueryString;
-import iss.se.team4.secondhand.model.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,9 +12,9 @@ public interface ProductService {
     /**
      * Adds a new product.
      *
-     * @param product the product to be added
+     * @param addProductDto the product to be added
      */
-    void add(Product product);
+    Result add(AddProductDto addProductDto);
 
     /**
      * Deletes a product by its ID.
@@ -25,9 +26,9 @@ public interface ProductService {
     /**
      * Updates an existing product by its ID.
      *
-     * @param product the product with updated information
+     * @param updateProductDto the product with updated information
      */
-    void updateById(Product product);
+    Result updateById(UpdateProductDto updateProductDto);
 
     /**
      * Query products by conditions and display by page.
@@ -35,4 +36,6 @@ public interface ProductService {
      * @param productQueryString the search conditions and page info
      */
     List<Product> queryByCondition(ProductQueryString productQueryString);
+
+    Result queryPage(int page, int pageSize);
 }

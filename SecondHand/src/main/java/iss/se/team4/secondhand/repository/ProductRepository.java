@@ -28,10 +28,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "p.description = :#{#product.description}, " +
             "p.price = :#{#product.price}, " +
             "p.categoryId = :#{#product.categoryId}, " +
-            "p.sellerId = :#{#product.sellerId}, " +
-            "p.publishDate = :#{#product.publishDate}, " +
+            "p.owner = :#{#product.owner}, " +
+            "p.releaseDate = :#{#product.releaseDate}, " +
             "p.status = :#{#product.status}, " +
-            "p.image = :#{#product.image} " +
+            "p.imageUrl = :#{#product.imageUrl} " +
             "WHERE p.id = :#{#product.id}")
     void updateById(@Param("product") Product product);
 

@@ -23,4 +23,9 @@
         </where>
         limit #{startPage}, #{pageSize}
     </select>
+
+    <select id="queryByPage" resultType="iss.se.team4.secondhand.model.Product">
+        select * from products
+        limit #{limit} offset #{offset}
+    </select>
 </mapper>

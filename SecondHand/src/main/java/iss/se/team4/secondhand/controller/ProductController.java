@@ -2,12 +2,11 @@ package iss.se.team4.secondhand.controller;
 
 
 import iss.se.team4.secondhand.common.Result;
-import iss.se.team4.secondhand.model.Product;
+import iss.se.team4.secondhand.common.dto.AddProductDto;
+import iss.se.team4.secondhand.common.dto.UpdateProductDto;
 import iss.se.team4.secondhand.model.ProductQueryString;
-import iss.se.team4.secondhand.model.User;
 import iss.se.team4.secondhand.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,9 +17,8 @@ public class ProductController {
 
     //add
     @PostMapping("/add")
-    public Result add(@RequestBody Product product) {
-        productService.add(product);
-        return Result.success();
+    public Result add(@RequestBody AddProductDto addProductDto) {
+        return productService.add(addProductDto);
     }
 
     //delete
@@ -32,16 +30,21 @@ public class ProductController {
 
     //update
     @PutMapping("/update")
-    public Result update(@RequestBody Product product) {
-        productService.updateById(product);
-        return Result.success();
+    public Result update(@RequestBody UpdateProductDto updateProductDto) {
+        return productService.updateById(updateProductDto);
     }
 
-    //query
-    @GetMapping("/query")
+    //condition query
+    @GetMapping("/queryByCondition")
     public Result queryByCondition(@RequestBody ProductQueryString productQueryString) {
         productQueryString.setStartPage((productQueryString.getPage() - 1) * productQueryString.getPageSize());
         return Result.success(productService.queryByCondition(productQueryString));
+    }
+
+    //simple query
+    @GetMapping("/query")
+    public Result query(@RequestParam int page, @RequestParam int pageSize) {
+        return productService.queryPage(page, pageSize);
     }
 
 }
