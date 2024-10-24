@@ -10,6 +10,7 @@ enum API {
 }
 
 interface LoginResponse {
+  data: any;
   success: boolean;
   token?: string;
   message?: string;
@@ -28,7 +29,7 @@ export interface Product {
 }
 
 export const loginUser = async (username: string, password: string): Promise<LoginResponse> => {
-  const response = await request.post<LoginResponse>(API.Login, {
+  const response = await axios.post<LoginResponse>(API.Login, {
     username,
     password,
   });
@@ -38,14 +39,14 @@ export const loginUser = async (username: string, password: string): Promise<Log
 }
 
 export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]> => {
-  const response = await request.get<{ data: Product[] }>(API.QueryProducts, {
+  const response = await axios.get<{ data: Product[] }>(API.QueryProducts, {
     params: { page, pageSize },
   });
   return response.data;
 };
 
 export const addProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
-  const response = await request.post<Product>(API.AddProduct, product);
+  const response = await axios.post<Product>(API.AddProduct, product);
 
   if (response.success) {
     console.log("Product added successfully", response.data);
@@ -60,7 +61,7 @@ export const fetchUsersPage = async (
   pageNum = 0,
   pageSize = 10
 ): Promise<UsersPageResponse> => {
-  const response = await request.post<ApiResponse<User>>(
+  const response = await axios.post<ApiResponse<User>>(
     API.UserManagement,
     null,
     {

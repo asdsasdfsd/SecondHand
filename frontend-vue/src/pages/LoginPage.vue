@@ -97,7 +97,7 @@ export default {
     const username = ref("");
     const password = ref("");
     const router = useRouter();
-    /*
+    
     const login = async() => {
       try {
         const response = await loginUser(username.value, password.value);
@@ -105,7 +105,19 @@ export default {
         if(response.success){
           localStorage.setItem("token", response.token || "");
           localStorage.setItem("username", username.value);
-          router.push("/home");
+
+          const role = response.data.user.role;
+          if(role == 1){
+            router.push({
+              path:"/home",
+              state:{isAdmin:true}
+            });
+          } else {
+            router.push({
+              path:"/home",
+              state:{isAdmin:false}
+            });
+          }
         } else {
           alert(response.message || "Invalid username or password");
         }
@@ -114,8 +126,8 @@ export default {
         alert("An error occurred while logging in.");
       }
     };
-    */
     
+    /*
     const login = () => {
       if (username.value === "admin" && password.value === "admin") {
         router.push({
@@ -133,7 +145,7 @@ export default {
         alert("Invalid username or password");
       }
     };
-
+    */
 
     //新增注册功能
     const dialogVisible = ref(false);
