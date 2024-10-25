@@ -84,7 +84,6 @@
 
 <script lang="ts">
 import { loginUser } from "@/api/user";
-import { log } from "console";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -103,7 +102,7 @@ export default {
         const response = await loginUser(username.value, password.value);
 
         if(response.success){
-          localStorage.setItem("token", response.token || "");
+          localStorage.setItem("token", response.data.token || "");
           localStorage.setItem("username", username.value);
 
           const role = response.data.user.role;

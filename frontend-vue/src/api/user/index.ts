@@ -35,22 +35,21 @@ export const loginUser = async (username: string, password: string): Promise<Log
   });
 
   //example: {success: true/false, token: "auth-token", message: "error or success message"}
-  return response;
+  return response.data;
 }
 
 export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]> => {
   const response = await axios.get<{ data: Product[] }>(API.QueryProducts, {
     params: { page, pageSize },
   });
-  return response.data;
+  return response.data.data;
 };
 
 export const addProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
   const response = await axios.post<Product>(API.AddProduct, product);
-
-  if (response.success) {
-    console.log("Product added successfully", response.data);
-    return response.data; 
+  if (response.data.success) {
+    console.log("Product added successfully", response.data.data);
+    return response.data.data;
   } else {
     console.error("Failed to add product");
     throw new Error("Failed to add product");
