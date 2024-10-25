@@ -22,7 +22,7 @@
           <el-col :span="12"><div class="right-header">
             <el-dropdown trigger="click" @command="handleCommand">
               <span class="el-dropdown-link">
-                User_xxx
+                {{usernameValue == null? 'Anonymous user':usernameValue}}
                 <el-icon class="el-icon--right">
                   <arrow-down />
                 </el-icon>
@@ -54,6 +54,13 @@
 <script lang="ts" setup>
 import { ref, onMounted, inject } from 'vue';
 import { useRouter } from "vue-router";
+
+const usernameValue = ref(null);  // 使用 ref 声明响应式变量
+
+onMounted(() => {
+  // 在组件挂载时获取 localStorage 的值
+  usernameValue.value = localStorage.getItem('username');
+});
 
 const router = useRouter();
 console.log(router.getRoutes());
