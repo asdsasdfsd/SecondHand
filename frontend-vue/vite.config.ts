@@ -40,7 +40,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['axios'],  // 添加 axios 到外部依赖
-    },
+      external: ['axios']
+    }
   },
 });
