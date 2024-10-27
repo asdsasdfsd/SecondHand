@@ -6,8 +6,16 @@ import { createRouter, createWebHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/home', name: 'Home' },
-        { path: '/admin', name: 'Admin' }
+        { 
+            path: '/home', 
+            name: 'Home',
+            redirect: '/home'  
+        },
+        { 
+            path: '/admin', 
+            name: 'Admin',
+            redirect: '/admin' 
+        }
     ],
 });
 

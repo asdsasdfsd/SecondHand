@@ -1,11 +1,11 @@
 import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from "vite";
 import path from "path";
 import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [
@@ -35,5 +35,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    css: true,
+    
   },
 });

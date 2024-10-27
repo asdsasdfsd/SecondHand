@@ -122,6 +122,8 @@
   
 <script lang="ts" setup>
   import {reactive, ref, onMounted, computed} from 'vue';
+  import type { Ref } from 'vue';
+
   import axios from 'axios';
 // import { User } from '@element-plus/icons-vue';
 // import { ta } from 'element-plus/es/locales.mjs';
@@ -137,8 +139,7 @@
   role: string
   avatar: string
   }
-  const tableData = ref<User>();
-
+  const tableData: Ref<User[]> = ref([]);
 
 
   const idx = ref("1");
@@ -258,17 +259,20 @@
   
   const searchId = () => {
     // console.log(inputId.value);
-    let temp = tableData.value.find(user => user.id == inputId.value);
+    let temp = tableData.value?.find(user => user.id == inputId.value);
     tableData.value = [];
-    tableData.value.push(temp);
+    if (temp) {
+      tableData.value.push(temp);
+    }
 
   }
   const searchName = () => {
     console.log(inputName.value);
     let temp = tableData.value.find(user => user.name == inputName.value);
     tableData.value = [];
-    tableData.value.push(temp);
-
+    if (temp) {
+      tableData.value.push(temp);
+    }
   }
 
   const resetAll = () => {

@@ -45,8 +45,13 @@ export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]>
   return response.data.data;
 };
 
+interface ProductResponse {
+  success: boolean;
+  data: Product;
+}
+
 export const addProduct = async (product: Omit<Product, 'id'>): Promise<Product> => {
-  const response = await axios.post<Product>(API.AddProduct, product);
+  const response = await axios.post<ProductResponse>(API.AddProduct, product);
   if (response.data.success) {
     console.log("Product added successfully", response.data.data);
     return response.data.data;
@@ -55,6 +60,12 @@ export const addProduct = async (product: Omit<Product, 'id'>): Promise<Product>
     throw new Error("Failed to add product");
   }
 };
+
+interface UsersPageResponse {
+  users: User[]; 
+  totalPages: number; 
+  totalElements: number; 
+}
 
 export const fetchUsersPage = async (
   pageNum = 0,

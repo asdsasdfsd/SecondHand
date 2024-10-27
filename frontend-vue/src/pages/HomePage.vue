@@ -53,13 +53,14 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, inject } from 'vue';
+import type { Ref } from 'vue';
 import { useRouter } from "vue-router";
 
-const usernameValue = ref(null);  // 使用 ref 声明响应式变量
+const usernameValue: Ref<string | null> = ref(null);  // 使用 ref 声明响应式变量
 
 onMounted(() => {
   // 在组件挂载时获取 localStorage 的值
-  usernameValue.value = localStorage.getItem('username');
+  usernameValue.value = localStorage.getItem('username') || '';
 });
 
 const router = useRouter();

@@ -58,7 +58,8 @@ export default {
 <script lang="ts" setup>
 import { ref, onMounted, inject } from 'vue';
 import { ElMessage } from 'element-plus';
-import { fetchProducts, Product } from "@/api/user";
+import type { Product } from "@/api/user";
+import { fetchProducts } from "@/api/user";
 
 const products = ref<Product[]>([]);
 const selectedProduct = ref<Product | null>(null);
