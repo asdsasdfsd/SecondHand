@@ -38,9 +38,4 @@ export default defineConfig({
     css: true,
 
   },
-  build: {
-    rollupOptions: {
-      external: ['axios']
-    }
-  },
 });

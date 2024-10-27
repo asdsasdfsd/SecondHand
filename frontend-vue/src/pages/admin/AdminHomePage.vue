@@ -1,4 +1,5 @@
 <template>
+  <!--
   <div>
     <el-row :gutter="20">
     <el-col :span="6"><div class="grid-content ep-bg-purple">
@@ -29,7 +30,7 @@
     <el-table-column label="Id" width="180">
       <template #default="scope">
         <div style="display: flex; align-items: center">
-          <!-- <el-icon><timer /></el-icon> -->
+          注释“<el-icon><timer /></el-icon> ”
           <span style="margin-left: 10px">{{ scope.row.id }}</span>
         </div>
       </template>
@@ -90,12 +91,12 @@
           <el-form-item label="password" style="max-width: 500px">
             <el-button type="primary" @click="resetPassword">Reset Password</el-button>
           </el-form-item>
-      <!-- <el-form-item label="Zones" :label-width="formLabelWidth">
+      注释“<el-form-item label="Zones" :label-width="formLabelWidth">
         <el-select v-model="form.region" placeholder="Please select a zone">
           <el-option label="Zone No.1" value="shanghai" />
           <el-option label="Zone No.2" value="beijing" />
         </el-select>
-      </el-form-item> -->
+      </el-form-item>”
     </el-form>
     <template #footer>
       <div class="dialog-footer">
@@ -109,7 +110,7 @@
     </div></el-col>
     </el-row>
   </div>
-    
+    -->
 
 </template>
   
@@ -121,170 +122,170 @@
   </script>
   
 <script lang="ts" setup>
-  import {reactive, ref, onMounted, computed} from 'vue';
-  import type { Ref } from 'vue';
+  // import {reactive, ref, onMounted, computed} from 'vue';
+  // import type { Ref } from 'vue';
 
-  import axios from 'axios';
-  // import { User } from '@element-plus/icons-vue';
-  // import { ta } from 'element-plus/es/locales.mjs';
-  // import { get } from 'node_modules/axios/index.cjs';
-  interface User {
-  // date: string
-  name: string
-  // address: string
-  id: string
-  username: string
-  email: string
-  phone: string
-  role: string
-  avatar: string
-  }
-  const tableData: Ref<User[]> = ref([]);
-
-
-  const idx = ref("1");
-  const handleSelect = (key: string, keyPath: string[]) => {
-    idx.value = key;
-    console.log(key, keyPath)
-  }
-
-  const updateDialogVisible = ref(false);
-  const form = reactive({
-    name: '',
-    email: '',
-    phone: '',
-    role: '',
-    username: '',
-    avatar: '',
-    id: 0,
-    password: '',
-  })
-
-  const getAllUser = async() =>{
-    // const data = ref<string | null>(null);
-    const error = ref<string | null>(null);
-    try {
-      console.log("end mounted!");
-      const response = await axios.get('myapi/user/selectAll');
-      tableData.value = response.data.data;
-      console.log(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const getUserById = async(id: string) =>{
-    // const data = ref<string | null>(null);
-    const error = ref<string | null>(null);
-    try {
-      console.log("end mounted!");
-      const response = await axios.get('myapi/user/selectById/' + id);
-      form.id = response.data.data.id;
-      form.username = response.data.data.username;
-      form.name = response.data.data.name;
-      form.phone = response.data.data.phone;
-      form.email = response.data.data.email;
-      form.role = response.data.data.role;
-      form.avatar = response.data.data.avatar;
-      form.password = response.data.data.password;
-      // form.avatar
-      console.log(response.data.data);
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const postData = async() =>{
-    try {
-      console.log("postData!");
-      const response = await axios.put('myapi/user/update', 
-        {
-          id: form.id,
-          name: form.name,
-          avatar: form.avatar,
-          email: form.email,
-          phone: form.phone,
-          role: form.role,
-          password: form.password,
-          username: form.username,
-        }
-      );
-      console.log('post response:', response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const resetPassword = async() =>{
-    try {
-      console.log("postData!");
-      const response = await axios.put('myapi/user/update', 
-        {
-          id: form.id,
-          name: form.name,
-          avatar: form.avatar,
-          email: form.email,
-          phone: form.phone,
-          role: form.role,
-          password: "123456",
-          username: form.username,
-        }
-      );
-      console.log('post response:', response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // import axios from 'axios';
+  // // import { User } from '@element-plus/icons-vue';
+  // // import { ta } from 'element-plus/es/locales.mjs';
+  // // import { get } from 'node_modules/axios/index.cjs';
+  // interface User {
+  // // date: string
+  // name: string
+  // // address: string
+  // id: string
+  // username: string
+  // email: string
+  // phone: string
+  // role: string
+  // avatar: string
+  // }
+  // const tableData: Ref<User[]> = ref([]);
 
 
-  const formLabelWidth = '140px';
-  const handleEdit = (index: number, row: User) => {
-    console.log(index, row)
-    updateDialogVisible.value = true
-    getUserById(row.id);
-  }
+  // const idx = ref("1");
+  // const handleSelect = (key: string, keyPath: string[]) => {
+  //   idx.value = key;
+  //   console.log(key, keyPath)
+  // }
 
-  const handleDelete = (index: number, row: User) => {
-    console.log(index, row)
-  }
+  // const updateDialogVisible = ref(false);
+  // const form = reactive({
+  //   name: '',
+  //   email: '',
+  //   phone: '',
+  //   role: '',
+  //   username: '',
+  //   avatar: '',
+  //   id: 0,
+  //   password: '',
+  // })
 
-  const handleConform = () => {
-    updateDialogVisible.value = false;
-    postData();
-  }
+  // const getAllUser = async() =>{
+  //   // const data = ref<string | null>(null);
+  //   const error = ref<string | null>(null);
+  //   try {
+  //     console.log("end mounted!");
+  //     const response = await axios.get('myapi/user/selectAll');
+  //     tableData.value = response.data.data;
+  //     console.log(response.data.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  // const getUserById = async(id: string) =>{
+  //   // const data = ref<string | null>(null);
+  //   const error = ref<string | null>(null);
+  //   try {
+  //     console.log("end mounted!");
+  //     const response = await axios.get('myapi/user/selectById/' + id);
+  //     form.id = response.data.data.id;
+  //     form.username = response.data.data.username;
+  //     form.name = response.data.data.name;
+  //     form.phone = response.data.data.phone;
+  //     form.email = response.data.data.email;
+  //     form.role = response.data.data.role;
+  //     form.avatar = response.data.data.avatar;
+  //     form.password = response.data.data.password;
+  //     // form.avatar
+  //     console.log(response.data.data);
 
-  //input search
-  const inputId = ref('');
-  const inputName = ref('');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // const postData = async() =>{
+  //   try {
+  //     console.log("postData!");
+  //     const response = await axios.put('myapi/user/update', 
+  //       {
+  //         id: form.id,
+  //         name: form.name,
+  //         avatar: form.avatar,
+  //         email: form.email,
+  //         phone: form.phone,
+  //         role: form.role,
+  //         password: form.password,
+  //         username: form.username,
+  //       }
+  //     );
+  //     console.log('post response:', response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // const resetPassword = async() =>{
+  //   try {
+  //     console.log("postData!");
+  //     const response = await axios.put('myapi/user/update', 
+  //       {
+  //         id: form.id,
+  //         name: form.name,
+  //         avatar: form.avatar,
+  //         email: form.email,
+  //         phone: form.phone,
+  //         role: form.role,
+  //         password: "123456",
+  //         username: form.username,
+  //       }
+  //     );
+  //     console.log('post response:', response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+
+  // const formLabelWidth = '140px';
+  // const handleEdit = (index: number, row: User) => {
+  //   console.log(index, row)
+  //   updateDialogVisible.value = true
+  //   getUserById(row.id);
+  // }
+
+  // const handleDelete = (index: number, row: User) => {
+  //   console.log(index, row)
+  // }
+
+  // const handleConform = () => {
+  //   updateDialogVisible.value = false;
+  //   postData();
+  // }
+
+  // //input search
+  // const inputId = ref('');
+  // const inputName = ref('');
   
-  const searchId = () => {
-    // console.log(inputId.value);
-    let temp = tableData.value?.find(user => user.id == inputId.value);
-    tableData.value = [];
-    if (temp) {
-      tableData.value.push(temp);
-    }
+  // const searchId = () => {
+  //   // console.log(inputId.value);
+  //   let temp = tableData.value?.find(user => user.id == inputId.value);
+  //   tableData.value = [];
+  //   if (temp) {
+  //     tableData.value.push(temp);
+  //   }
 
-  }
-  const searchName = () => {
-    console.log(inputName.value);
-    let temp = tableData.value.find(user => user.name == inputName.value);
-    tableData.value = [];
-    if (temp) {
-      tableData.value.push(temp);
-    }
-  }
+  // }
+  // const searchName = () => {
+  //   console.log(inputName.value);
+  //   let temp = tableData.value.find(user => user.name == inputName.value);
+  //   tableData.value = [];
+  //   if (temp) {
+  //     tableData.value.push(temp);
+  //   }
+  // }
 
-  const resetAll = () => {
-    getAllUser();
-    inputId.value = '';
-    inputName.value = '';
-  }
+  // const resetAll = () => {
+  //   getAllUser();
+  //   inputId.value = '';
+  //   inputName.value = '';
+  // }
 
   
-  onMounted(() => {
-    getAllUser();
-  })
+  // onMounted(() => {
+  //   getAllUser();
+  // })
 
 </script>
   
