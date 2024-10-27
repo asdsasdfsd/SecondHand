@@ -39,7 +39,7 @@ pipeline {
             steps {
                 script {
                     dir('frontend-vue') {
-                        def frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:lastest")
+                        def frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:latest")
                     }
                 }
             }
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 script {
                     dir('SecondHand') {
-                        def backendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:lastest")
+                        def backendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:latest")
                     }
                 }
             }
@@ -74,7 +74,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', "${DOCKERHUB_CREDENTIALS}") {
-                        def frontendImage = docker.image("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:lastest")
+                        def frontendImage = docker.image("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:latest")
                         frontendImage.push()
                     }
                 }
@@ -85,7 +85,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', "${DOCKERHUB_CREDENTIALS}") {
-                        def backendImage = docker.image("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:lastest")
+                        def backendImage = docker.image("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:latest")
                         backendImage.push()
                     }
                 }
@@ -96,8 +96,8 @@ pipeline {
     post {
         always {
             script {
-                sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:lastest || true"
-                sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:lastest || true"
+                sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:latest || true"
+                sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:latest || true"
             }
         }
     }
