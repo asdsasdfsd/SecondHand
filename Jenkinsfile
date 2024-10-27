@@ -18,6 +18,9 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('frontend-vue') {
+                    sh 'node -v'
+                    sh 'npm -v'
+                    sh 'npm update'
                     sh 'rm -rf node_modules'
                     sh 'npm cache clean --force'
                     sh 'npm install'   
