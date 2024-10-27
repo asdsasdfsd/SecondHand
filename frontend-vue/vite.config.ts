@@ -36,6 +36,11 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     css: true,
-    
+
+  },
+  build: {
+    rollupOptions: {
+      external: ['axios'],  // 添加 axios 到外部依赖
+    },
   },
 });
