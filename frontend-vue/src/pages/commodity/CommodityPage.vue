@@ -21,7 +21,7 @@
         </el-row>
 
         <el-dialog
-        :visible.sync="isDialogVisible"
+        v-model="isDialogVisible"
         width="400px"
         :before-close="handleClose"
         >
@@ -110,11 +110,11 @@ const searchProduct = async (key) => {
 
 .search-container {
   display: flex;
-  justify-content: flex-end; /* 右对齐 */
-  margin: 20px; /* 添加间距 */
+  justify-content: flex-end; 
+  margin: 20px; 
 }
 
 .search-input {
-  width: 300px; /* 设置输入框宽度 */
+  width: 300px; 
 }
 </style>
