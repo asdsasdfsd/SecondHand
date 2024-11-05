@@ -47,4 +47,9 @@ public class ProductController {
         return productService.queryPage(page, pageSize);
     }
 
+    @GetMapping("/queryWithKeyword")
+    public Result queryWithKeyword(@RequestParam String key) {
+        return productService.queryWithKeyword(key);
+    }
+
 }

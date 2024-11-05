@@ -13,4 +13,7 @@ public interface ProductMapper {
 
     //query by page
     List<Product> queryByPage(int offset, int limit);
+
+    //query with keyword
+    List<Product> queryByKeyword(String keyword);
 }

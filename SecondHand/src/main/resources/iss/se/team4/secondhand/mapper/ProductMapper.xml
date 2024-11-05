@@ -28,4 +28,10 @@
         select * from products
         limit #{limit} offset #{offset}
     </select>
+
+    <select id="queryByKeyword" resultType="iss.se.team4.secondhand.model.Product">
+        select * from products
+        <where> name like concat('%', #{keyword}, '%') </where>
+    </select>
+
 </mapper>

@@ -83,5 +83,18 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public Result queryWithKeyword(String keyword) {
+        if(keyword == null || keyword.isEmpty()) {
+            return Result.failure("keyword can not be empty");
+        }
+        try {
+            List<Product> list = productMapper.queryByKeyword(keyword);
+            return Result.success(list);
+        } catch (Exception e) {
+            return Result.failure(e.getMessage());
+        }
+    }
+
 
 }

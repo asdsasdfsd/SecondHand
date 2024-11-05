@@ -38,4 +38,6 @@ public interface ProductService {
     List<Product> queryByCondition(ProductQueryString productQueryString);
 
     Result queryPage(int page, int pageSize);
+
+    Result queryWithKeyword(String keyword);
 }
