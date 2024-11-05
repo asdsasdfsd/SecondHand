@@ -7,6 +7,7 @@ enum API {
   ProductManagement = "myapi/product",
   QueryProducts = "myapi/product/query",
   AddProduct = "myapi/product/add",
+  QueryProductsWithKeyWord = "myapi/product/queryWithKeyword",
 }
 
 interface LoginResponse {
@@ -41,6 +42,13 @@ export const loginUser = async (username: string, password: string): Promise<Log
 export const fetchProducts = async (page = 1, pageSize = 10): Promise<Product[]> => {
   const response = await axios.get<{ data: Product[] }>(API.QueryProducts, {
     params: { page, pageSize },
+  });
+  return response.data.data;
+};
+
+export const fetchProductsWithKeywords = async (key : string): Promise<Product[]> => {
+  const response = await axios.get<{ data: Product[] }>(API.QueryProductsWithKeyWord, {
+    params: { key },
   });
   return response.data.data;
 };

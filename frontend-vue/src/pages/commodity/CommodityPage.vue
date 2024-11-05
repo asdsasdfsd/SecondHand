@@ -1,19 +1,11 @@
 <template>
+  <div class="search-container" style="text-align: right;">
+    <input style="width: 300px; height: 40px;" class="stxt" type="text" name="keyword" v-model="key" placeholder="Please enter keywords">
+    <input style="width: 50px; height: 40px;" type="button" class="sbtn" value="search" @click="searchProduct(key)">
+    <input style="width: 50px; height: 40px;" type="button" class="sbtn" value="reset" @click="fetchAndSortProducts()">
+  </div>
+
     <div>
-      <!--
-      <el-row :gutter="20">
-          <el-col :span="6">
-            <el-card class="product-card">
-              <img src="https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="product-image" />
-              <div class="product-info">
-                <h3>Sample Product 1</h3>
-                <p><strong>$999</strong></p>
-                <el-button type="primary">Add to Cart</el-button>
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      -->  
         <el-row :gutter="20">
           <el-col :span="6" v-for="product in products" :key="product.id">
             <el-card class="product-card">
@@ -58,7 +50,7 @@ export default {
 <script lang="ts" setup>
 import { ref, onMounted, inject } from 'vue';
 import { ElMessage } from 'element-plus';
-import { fetchProducts, Product } from "@/api/user";
+import {fetchProducts, fetchProductsWithKeywords, Product} from "@/api/user";
 
 const products = ref<Product[]>([]);
 const selectedProduct = ref<Product | null>(null);
@@ -90,6 +82,19 @@ const handleClose = () => {
   isDialogVisible.value = false;
 };
 
+const searchProduct = async (key) => {
+  if (key === "" || key === undefined) {
+    alert("keyword can not be empty");
+    return;
+  }
+
+  const ProductsWithKeywords = await fetchProductsWithKeywords(key);
+  products.value = ProductsWithKeywords.sort((a, b) => {
+    return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
+  });
+}
+
+
 </script>
 
 <style scoped>
@@ -101,5 +106,15 @@ const handleClose = () => {
 
 .dialog-footer {
   text-align: right;
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end; /* 右对齐 */
+  margin: 20px; /* 添加间距 */
+}
+
+.search-input {
+  width: 300px; /* 设置输入框宽度 */
 }
 </style>
