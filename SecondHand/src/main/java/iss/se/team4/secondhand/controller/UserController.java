@@ -52,6 +52,11 @@ public class UserController {
         return Result.success(user);
     }
 
+    @GetMapping("/selectByUsername/{username}")
+    public Result selectByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username);
+    }
+
     @GetMapping("/selectAll")
     public Result selectAll() {
         List<User> list = userService.selectAll();

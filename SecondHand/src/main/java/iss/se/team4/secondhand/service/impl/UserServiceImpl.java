@@ -223,4 +223,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(optionalUser);
         return Result.success();
     }
+
+    @Override
+    public Result getUserByUsername(String username) {
+        User optionalUser = userRepository.findByUsername(username);
+        if (optionalUser == null) {
+            return Result.failure("User not found");
+        } else {
+            return Result.success(optionalUser);
+        }
+    }
 }

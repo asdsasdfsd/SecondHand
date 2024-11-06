@@ -101,5 +101,7 @@ public interface UserService {
 
     Result setUserAddress(String username, String address1, String address2);
 
+    Result getUserByUsername(String username);
+
 
 }
