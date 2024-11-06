@@ -40,4 +40,8 @@ public interface ProductService {
     Result queryPage(int page, int pageSize);
 
     Result queryWithKeyword(String keyword);
+
+    Result queryByUsername(String username);
+
+    Result queryAll();
 }

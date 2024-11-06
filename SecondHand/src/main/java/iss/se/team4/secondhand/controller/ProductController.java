@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     //delete
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public Result deleteById(@PathVariable int id) {
         productService.deleteById(id);
         return Result.success();
@@ -50,6 +50,16 @@ public class ProductController {
     @GetMapping("/queryWithKeyword")
     public Result queryWithKeyword(@RequestParam String key) {
         return productService.queryWithKeyword(key);
+    }
+
+    @GetMapping("/queryByUsername/{username}")
+    public Result queryByUsername(@PathVariable String username) {
+        return productService.queryByUsername(username);
+    }
+
+    @GetMapping("/queryAll")
+    public Result queryAll() {
+        return productService.queryAll();
     }
 
 }

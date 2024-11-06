@@ -54,15 +54,10 @@ public class ProductServiceImpl implements ProductService {
         if(!productRepository.existsById(updateProductDto.getId())) {
             return Result.failure("product does not exist");
         }
-        Product product = new Product();
-        product.setId(updateProductDto.getId());
+        Product product =productRepository.findById(updateProductDto.getId()).get();
         product.setName(updateProductDto.getName());
         product.setDescription(updateProductDto.getDescription());
-        product.setImageUrl(updateProductDto.getImageUrl());
-        product.setOwner(updateProductDto.getOwner());
         product.setAmount(updateProductDto.getAmount());
-        product.setReleaseDate(updateProductDto.getReleaseDate());
-        product.setStatus("published");
         product.setPrice(updateProductDto.getPrice());
         productRepository.updateById(product);
         return Result.success();
@@ -90,6 +85,30 @@ public class ProductServiceImpl implements ProductService {
         }
         try {
             List<Product> list = productMapper.queryByKeyword(keyword);
+            return Result.success(list);
+        } catch (Exception e) {
+            return Result.failure(e.getMessage());
+        }
+    }
+
+    @Override
+    public Result queryByUsername(String username) {
+        if(username == null || username.isEmpty()) {
+            return Result.failure("username can not be empty");
+        }
+
+        try {
+            List<Product> list = productRepository.findAllByOwner(username);
+            return Result.success(list);
+        } catch (Exception e) {
+            return Result.failure(e.getMessage());
+        }
+    }
+
+    @Override
+    public Result queryAll() {
+        try {
+            List<Product> list = productRepository.findAll();
             return Result.success(list);
         } catch (Exception e) {
             return Result.failure(e.getMessage());
