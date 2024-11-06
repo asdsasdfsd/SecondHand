@@ -18,7 +18,7 @@
         </el-menu-item>
       </el-menu>
     </div></el-col>
-    <el-col :span="18"><div class="grid-content ep-bg-purple">
+    <el-col :span="18"><div class="grid-content ep-bg-purple" >
       <span>Search id: </span>
       <el-input v-model="inputId" style="width: 240px" placeholder="Please input id" />
       <el-button type="primary" @click="searchId">Search(id)  </el-button>
@@ -47,7 +47,7 @@
             <div>avatar: {{ scope.row.avatar }}</div>
           </template>
           <template #reference>
-            <el-tag>{{ scope.row.name }}</el-tag>
+            <el-tag>{{ scope.row.username }}</el-tag>
           </template>
         </el-popover>
       </template>
@@ -67,6 +67,67 @@
       </template>
     </el-table-column>
   </el-table>
+      <el-table :data="userCommodityTableData" style="width: 100%" v-if="idx == '2'">
+        <el-table-column label="id" width="50">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <!-- <el-icon><timer /></el-icon> -->
+              <span style="margin-left: 10px">{{ scope.row.id }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="name" width="180">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <!-- <el-icon><timer /></el-icon> -->
+              <span style="margin-left: 10px">{{ scope.row.name }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="description" width="180">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <!-- <el-icon><timer /></el-icon> -->
+              <span style="margin-left: 10px">{{ scope.row.description }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="amount" width="180">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <!-- <el-icon><timer /></el-icon> -->
+              <span style="margin-left: 10px">{{ scope.row.amount }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="price" width="180">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <!-- <el-icon><timer /></el-icon> -->
+              <span style="margin-left: 10px">{{ scope.row.price }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="owner" width="180">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <!-- <el-icon><timer /></el-icon> -->
+              <span style="margin-left: 10px">{{ scope.row.owner }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="Operations">
+          <template #default="scope">
+            <el-button
+                size="small"
+                type="danger"
+                @click="handleProductDelete(scope.$index, scope.row)"
+            >
+              Delete
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
   <el-dialog v-model="updateDialogVisible" title="Shipping address" width="500">
     <el-form :model="form">
       <el-form-item label="Nickname" style="max-width: 500px">
@@ -166,7 +227,8 @@
       console.log("end mounted!");
       const response = await axios.get('myapi/user/selectAll');
       tableData.value = response.data.data;
-      console.log(response.data.data);
+      // console.log(response.data.data);
+      console.log(tableData.value)
     } catch (error) {
       console.log(error);
     }
@@ -280,7 +342,34 @@
   
   onMounted(() => {
     getAllUser();
+    getAllProduct();
   })
+
+
+
+  interface UserProduct {
+    id: number,
+    name: string,
+    description: string,
+    amount: number,
+    price: number,
+    releaseDate: string
+  }
+  const userCommodityTableData = ref<UserProduct>()
+  const getAllProduct = async() => {
+    console.log("getting user product")
+    const response = await axios.get('myapi/product/queryAll');
+    userCommodityTableData.value = response.data.data;
+    console.log(response.data.data);
+    console.log("table:"+userCommodityTableData.value)
+  }
+
+  const handleProductDelete = (index: number, row: UserProduct) => {
+    // console.log(row.id)
+    const response = axios.post('myapi/product/delete/' + row.id)
+    console.log(response)
+    getAllProduct();
+  }
 
 </script>
   
