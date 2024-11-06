@@ -31,7 +31,9 @@
           <div>
             <img :src="selectedProduct?.imageUrl" class="dialog-product-image" />
             <p><strong>Price: ${{ selectedProduct?.price }}</strong></p>
-            <p><strong>Owner Rating: {{ selectedProduct?.ownerRating }}</strong></p>
+            <p><strong>Owner: {{ selectedProduct?.owner }}</strong></p>
+            <p><strong>OwnerEmail: {{owner?.email}}</strong></p>
+            <p><strong>OwnerPhone: {{owner?.phone}}</strong></p>
           </div>
           <span slot="footer" class="dialog-footer">
             <el-button @click="isDialogVisible = false">Close</el-button>
@@ -51,6 +53,8 @@ export default {
 import { ref, onMounted, inject } from 'vue';
 import { ElMessage } from 'element-plus';
 import {fetchProducts, fetchProductsWithKeywords, Product} from "@/api/user";
+import type {User} from "@/api/user/type";
+import axios from "axios";
 
 const products = ref<Product[]>([]);
 const selectedProduct = ref<Product | null>(null);
@@ -76,7 +80,15 @@ const addToCart = (product: Product) => {
 const openProductDetails = (product: Product) => {
   selectedProduct.value = product;
   isDialogVisible.value = true;
+  getOwnerInfo(product.owner)
 };
+
+const owner = ref<User | null>(null);
+const getOwnerInfo = async (username : string) => {
+  console.log(username)
+  const response = await axios.get('myapi/user/selectByUsername/' + username);
+  owner.value = response.data.data;
+}
 
 const handleClose = () => {
   isDialogVisible.value = false;
