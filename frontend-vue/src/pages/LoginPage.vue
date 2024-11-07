@@ -23,8 +23,8 @@
           <button type="submit" class="login-button">Login</button>
           <el-divider />
           <h3>Join now</h3>
-          <button @click="handleRegister" class="login-button">Register</button>
         </form>
+        <button @click="handleRegister" class="login-button">Register</button>
       </div>
 
       <div class = "gradient-box">
@@ -150,7 +150,6 @@ export default {
     const dialogVisible = ref(false);
     const handleRegister = () => {
       dialogVisible.value = true;
-      // console.log(dialogVisible);
     }
     const handleClose = () => {
       dialogVisible.value = false;
