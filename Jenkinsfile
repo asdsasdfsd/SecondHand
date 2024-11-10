@@ -37,13 +37,14 @@ pipeline {
             }
         }
 
-        // stage('Vulnerability Scan') {
-        //     steps {
-        //         dir('SecondHand') {               
-        //             echo 'Running OWASP Dependency-Check for vulnerability scanning...'
-        //             sh "${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project MyProject --out ./reports --scan ./"
-        //     }
-        // }
+        stage('Vulnerability Scan') {
+            steps {
+                dependencyCheck additionalArguments: '--scan ./SecondHand', 
+                                odcInstallation: 'Dependency-Check', // 确保插件安装路径名称匹配
+                                outDir: './reports', 
+                                projectName: 'MyProject'
+            }
+        }
 
         stage('Build Frontend Docker Image') {
             steps {
