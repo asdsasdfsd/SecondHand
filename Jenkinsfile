@@ -5,8 +5,12 @@ pipeline {
         DOCKERHUB_REPO_FRONTEND = 'sh-vue'               
         DOCKERHUB_REPO_BACKEND = 'sh-spring'              
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'  
-        DOCKERHUB_USER = 'tigerwk'                       
+        DOCKERHUB_USER = 'tigerwk'
+        DEPENDENCY_CHECK_HOME = './dependency-check'                      
     }
+
+    def frontendImage
+    def backendImage
 
     stages {
         stage('Checkout') {
@@ -41,6 +45,7 @@ pipeline {
             steps {
                 dir('SecondHand') {               
                     echo 'Running OWASP Dependency-Check for vulnerability scanning...'
+                    sh 'mkdir -p reports'
                     sh "${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project MyProject --out ./reports --scan ./"
             }
         }
