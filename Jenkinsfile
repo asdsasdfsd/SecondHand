@@ -57,13 +57,14 @@ pipeline {
         stage('Publish Dependency-Check Report') {
             steps {
                 script {
-                    def reportPath = './reports/dependency-check-report.html'
+                    def reportPath = './reports/dependency-check-report.xml'
                     echo "Checking for report at: ${reportPath}"
+
                     if (fileExists(reportPath)) {
                         echo "Report found. Publishing..."
                         publishHTML(target: [
-                            reportDir: './reports',
-                            reportFiles: 'dependency-check-report.html',
+                            reportDir: './reports',               
+                            reportFiles: 'dependency-check-report.xml', 
                             reportName: 'Vulnerability Report'
                         ])
                     } else {
