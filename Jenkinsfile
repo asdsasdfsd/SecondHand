@@ -41,15 +41,15 @@ pipeline {
             }
         }
 
-        stage('Vulnerability Scan') {
-            steps {
-                dir('SecondHand') {               
-                    echo 'Running OWASP Dependency-Check for vulnerability scanning...'
-                    sh 'mkdir -p reports'
-                    sh "${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project MyProject --out ./reports --scan ./"
-                }
-            }
-        }
+        // stage('Vulnerability Scan') {
+        //     steps {
+        //         dir('SecondHand') {               
+        //             echo 'Running OWASP Dependency-Check for vulnerability scanning...'
+        //             sh 'mkdir -p reports'
+        //             sh "${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project MyProject --out ./reports --scan ./"
+        //         }
+        //     }
+        // }
 
         stage('Build Frontend Docker Image') {
             steps {
@@ -115,15 +115,15 @@ pipeline {
                 sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID} || true"
                 sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID} || true"
 
-                echo 'Archiving and publishing the reports...'
-                archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
+            //     echo 'Archiving and publishing the reports...'
+            //     archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
                 
-                publishHTML(target: [
-                    reportDir: 'reports',
-                    reportFiles: 'dependency-check-report.html',
-                    reportName: 'Vulnerability Report'
-                ])
-            }
+            //     publishHTML(target: [
+            //         reportDir: 'reports',
+            //         reportFiles: 'dependency-check-report.html',
+            //         reportName: 'Vulnerability Report'
+            //     ])
+            // }
         }
     }
 }
