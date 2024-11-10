@@ -39,10 +39,10 @@ pipeline {
 
         stage('Vulnerability Scan') {
             steps {
-                // dependencyCheck additionalArguments: '--scan ./SecondHand', 
-                //                 odcInstallation: 'Dependency-Check',
-                //                 outDir: './reports', 
-                //                 projectName: 'MyProject'
+                dependencyCheck additionalArguments: '--scan ./SecondHand', 
+                                odcInstallation: 'Dependency-Check',
+                                outDir: './reports', 
+                                projectName: 'MyProject'
             }
         }
 
