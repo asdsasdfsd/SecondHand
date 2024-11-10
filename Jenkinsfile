@@ -59,13 +59,13 @@ pipeline {
         stage('Publish Dependency-Check Report') {
             steps {
                 script {
-                    def reportPath = './reports/dependency-check-report.html'
+                    def reportPath = '/var/lib/jenkins/workspace/wke-pipeline/./dependency-check-report.html'
                     echo "Checking for report at: ${reportPath}"
 
                     if (fileExists(reportPath)) {
                         echo "Report found. Publishing..."
                         publishHTML(target: [
-                            reportDir: './reports',
+                            reportDir: '/var/lib/jenkins/workspace/wke-pipeline/.',
                             reportFiles: 'dependency-check-report.html', 
                             reportName: 'Vulnerability Report'
                         ])
