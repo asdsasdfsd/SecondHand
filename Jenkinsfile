@@ -39,10 +39,18 @@ pipeline {
 
         stage('Vulnerability Scan') {
             steps {
-                dependencyCheck additionalArguments: '--scan ./SecondHand', 
-                                odcInstallation: 'Dependency-Check',
-                                outDir: './reports', 
-                                projectName: 'MyProject'
+                script {
+                    try {
+                        dependencyCheck additionalArguments: '--scan ./SecondHand', 
+                                        odcInstallation: 'Dependency-Check', 
+                                        outDir: './reports', 
+                                        projectName: 'MyProject'
+                    } catch (Exception e) {
+                        echo "Error during vulnerability scan: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                        throw e  
+                    }
+                }
             }
         }
 
