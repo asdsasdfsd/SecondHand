@@ -5,12 +5,8 @@ pipeline {
         DOCKERHUB_REPO_FRONTEND = 'sh-vue'               
         DOCKERHUB_REPO_BACKEND = 'sh-spring'              
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'  
-        DOCKERHUB_USER = 'tigerwk'
-        DEPENDENCY_CHECK_HOME = './dependency-check'                      
+        DOCKERHUB_USER = 'tigerwk'                       
     }
-
-    def frontendImage
-    def backendImage
 
     stages {
         stage('Checkout') {
@@ -45,9 +41,7 @@ pipeline {
         //     steps {
         //         dir('SecondHand') {               
         //             echo 'Running OWASP Dependency-Check for vulnerability scanning...'
-        //             sh 'mkdir -p reports'
         //             sh "${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project MyProject --out ./reports --scan ./"
-        //         }
         //     }
         // }
 
@@ -55,7 +49,7 @@ pipeline {
             steps {
                 script {
                     dir('frontend-vue') {
-                        frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
+                        def frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
                     }
                 }
             }
@@ -65,7 +59,7 @@ pipeline {
             steps {
                 script {
                     dir('SecondHand') {
-                        backendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
+                        def backendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
                     }
                 }
             }
@@ -115,15 +109,15 @@ pipeline {
                 sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID} || true"
                 sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID} || true"
 
-            //     echo 'Archiving and publishing the reports...'
-            //     archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
+                // echo 'Archiving and publishing the reports...'
+                // archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
                 
-            //     publishHTML(target: [
-            //         reportDir: 'reports',
-            //         reportFiles: 'dependency-check-report.html',
-            //         reportName: 'Vulnerability Report'
-            //     ])
-            // }
+                // publishHTML(target: [
+                //     reportDir: 'reports',
+                //     reportFiles: 'dependency-check-report.html',
+                //     reportName: 'Vulnerability Report'
+                // ])
+            }
         }
     }
 }
