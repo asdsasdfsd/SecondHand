@@ -41,6 +41,8 @@ pipeline {
             steps {
                 script {
                     try {
+                        sh 'mkdir -p ./reports'
+                        
                         dependencyCheck additionalArguments: '--scan ./SecondHand', 
                                         odcInstallation: 'Dependency-Check', 
                                         outDir: './reports', 
@@ -57,7 +59,7 @@ pipeline {
         stage('Publish Dependency-Check Report') {
             steps {
                 script {
-                    def reportPath = '/var/lib/jenkins/workspace/wke-pipeline/./dependency-check-report.xml'
+                    def reportPath = './reports/dependency-check-report.xml'
                     echo "Checking for report at: ${reportPath}"
 
                     if (fileExists(reportPath)) {
