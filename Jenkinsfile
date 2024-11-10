@@ -47,6 +47,7 @@ pipeline {
                     echo 'Running OWASP Dependency-Check for vulnerability scanning...'
                     sh 'mkdir -p reports'
                     sh "${DEPENDENCY_CHECK_HOME}/bin/dependency-check.sh --project MyProject --out ./reports --scan ./"
+                }
             }
         }
 
@@ -54,7 +55,7 @@ pipeline {
             steps {
                 script {
                     dir('frontend-vue') {
-                        def frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
+                        frontendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID}")
                     }
                 }
             }
@@ -64,7 +65,7 @@ pipeline {
             steps {
                 script {
                     dir('SecondHand') {
-                        def backendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
+                        backendImage = docker.build("${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID}")
                     }
                 }
             }
