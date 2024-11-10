@@ -57,7 +57,7 @@ pipeline {
         stage('Publish Dependency-Check Report') {
             steps {
                 script {
-                    def reportPath = './reports/dependency-check-report.xml'
+                    def reportPath = '/var/lib/jenkins/workspace/wke-pipeline/./dependency-check-report.xml'
                     echo "Checking for report at: ${reportPath}"
 
                     if (fileExists(reportPath)) {
@@ -139,15 +139,6 @@ pipeline {
             script {
                 sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_FRONTEND}:${env.BUILD_ID} || true"
                 sh "docker rmi ${DOCKERHUB_USER}/${DOCKERHUB_REPO_BACKEND}:${env.BUILD_ID} || true"
-
-                // echo 'Archiving and publishing the reports...'
-                // archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
-                
-                // publishHTML(target: [
-                //     reportDir: 'reports',
-                //     reportFiles: 'dependency-check-report.html',
-                //     reportName: 'Vulnerability Report'
-                // ])
             }
         }
     }
