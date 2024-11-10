@@ -54,6 +54,16 @@ pipeline {
             }
         }
 
+        stage('Publish Dependency-Check Report') {
+            steps {
+                publishHTML(target: [
+                    reportDir: './reports', 
+                    reportFiles: 'dependency-check-report.html', 
+                    reportName: 'Vulnerability Report'
+                ])
+            }
+        }
+
         stage('Build Frontend Docker Image') {
             steps {
                 script {
