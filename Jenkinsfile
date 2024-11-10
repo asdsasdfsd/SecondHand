@@ -56,13 +56,24 @@ pipeline {
 
         stage('Publish Dependency-Check Report') {
             steps {
-                publishHTML(target: [
-                    reportDir: './reports', 
-                    reportFiles: 'dependency-check-report.html', 
-                    reportName: 'Vulnerability Report'
-                ])
+                script {
+                    def reportPath = './reports/dependency-check-report.html'
+                    echo "Checking for report at: ${reportPath}"
+                    if (fileExists(reportPath)) {
+                        echo "Report found. Publishing..."
+                        publishHTML(target: [
+                            reportDir: './reports',
+                            reportFiles: 'dependency-check-report.html',
+                            reportName: 'Vulnerability Report'
+                        ])
+                    } else {
+                        echo "Dependency-Check report not found at ${reportPath}"
+                        currentBuild.result = 'FAILURE' 
+                    }
+                }
             }
         }
+
 
         stage('Build Frontend Docker Image') {
             steps {
