@@ -43,7 +43,7 @@ pipeline {
                     try {
                         sh 'mkdir -p ./reports'
                         
-                        dependencyCheck additionalArguments: '--scan ./SecondHand', 
+                        dependencyCheck additionalArguments: '--scan ./SecondHand --format HTML', 
                                         odcInstallation: 'Dependency-Check', 
                                         outDir: './reports', 
                                         projectName: 'MyProject'
@@ -59,14 +59,14 @@ pipeline {
         stage('Publish Dependency-Check Report') {
             steps {
                 script {
-                    def reportPath = './reports/dependency-check-report.xml'
+                    def reportPath = './reports/dependency-check-report.html'
                     echo "Checking for report at: ${reportPath}"
 
                     if (fileExists(reportPath)) {
                         echo "Report found. Publishing..."
                         publishHTML(target: [
-                            reportDir: './reports',               
-                            reportFiles: 'dependency-check-report.xml', 
+                            reportDir: './reports',
+                            reportFiles: 'dependency-check-report.html', 
                             reportName: 'Vulnerability Report'
                         ])
                     } else {
@@ -76,6 +76,7 @@ pipeline {
                 }
             }
         }
+
 
 
         stage('Build Frontend Docker Image') {
