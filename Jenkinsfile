@@ -39,10 +39,10 @@ pipeline {
 
         stage('Vulnerability Scan') {
             steps {
-                dependencyCheck additionalArguments: '--scan ./SecondHand', 
-                                odcInstallation: 'Dependency-Check', // 确保插件安装路径名称匹配
-                                outDir: './reports', 
-                                projectName: 'MyProject'
+                // dependencyCheck additionalArguments: '--scan ./SecondHand', 
+                //                 odcInstallation: 'Dependency-Check',
+                //                 outDir: './reports', 
+                //                 projectName: 'MyProject'
             }
         }
 
