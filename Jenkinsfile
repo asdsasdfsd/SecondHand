@@ -135,6 +135,29 @@ pipeline {
                 }
             }
         }
+
+        stage('Scalability Testing') {
+            steps {
+                sh 'mkdir -p reports/scalability'
+                sh 'jmeter -n -t Test/scalability_test.jmx -l results.jtl -e -o reports/scalability'
+                publishHTML(target: [
+                    reportDir: 'reports/scalability',
+                    reportFiles: 'index.html',
+                    reportName: 'Scalability Test Report'
+                ])
+            }
+        }
+        stage('Performance Testing') {
+            steps {
+                sh 'mkdir -p reports'
+                sh 'k6 run --out json=reports/performance_test_result.json Test/performance_test.js'
+                publishHTML(target: [
+                    reportDir: 'reports',
+                    reportFiles: 'performance_test_result.json',
+                    reportName: 'Performance Test Report'
+                ])
+            }
+        }
     }
 
     post {
